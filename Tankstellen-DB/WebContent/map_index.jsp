@@ -20,7 +20,9 @@
     <title>Map_Index</title>
 
     <!-- Bootstrap core CSS -->
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.css" rel="stylesheet" >
+    <style type="text/css">
+<%@ include file="css/bootstrap.css" %>
+</style> 
 	<style type="text/css">
       html { height: 100% }
       body { height: 60%; margin-top: 18%; padding: 15px; }
@@ -28,8 +30,10 @@
     </style>
 	
     <!-- Custom styles for this template -->
-    <link href="css/map_index.css" rel="stylesheet">
-	 
+        <style type="text/css">
+<%@ include file="css/map_index.css" %>
+</style> 
+ 
 	<!--Maps API-->
 	<script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANIf0_AZrJxJ-X2W3XLIgX1F-teaw1iK4&sensor=true">

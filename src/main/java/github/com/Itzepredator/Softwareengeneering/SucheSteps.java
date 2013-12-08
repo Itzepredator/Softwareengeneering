@@ -79,4 +79,42 @@ public class SucheSteps {
 	    throw new PendingException();
 	}
 	
+	@Dann("^bekommt der Benutzer das Ergebnis auf der App/Homepage präsentiert.$")
+	public void bekommt_der_Benutzer_das_Ergebnis_auf_der_App_Homepage_präsentiert() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    throw new PendingException();
+	}
+
+	@Dann("^werden die Persönlichen Informationen validiert.$")
+	public void werden_die_Persönlichen_Informationen_validiert() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    throw new PendingException();
+	}
+
+	@Dann("^bekommt der Benutzer eine Bestätigung, dass der Vorgang erfolgreich abgeschlossen wurde$")
+	public void bekommt_der_Benutzer_eine_Bestätigung_dass_der_Vorgang_erfolgreich_abgeschlossen_wurde() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    throw new PendingException();
+	}
+
+	@Wenn("^die Validierung Fehlschlägt,$")
+	public void die_Validierung_Fehlschlägt() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    throw new PendingException();
+	}
+
+	@Dann("^kann eine neue Tankstelle auswählen$")
+	public void kann_eine_neue_Tankstelle_auswählen() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    throw new PendingException();
+	}
+
+	@Dann("^der Benutzer kann die Daten der Abfrage ändern$")
+	public void der_Benutzer_kann_die_Daten_der_Abfrage_ändern() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    throw new PendingException();
+	}
+	
+
+	
 }

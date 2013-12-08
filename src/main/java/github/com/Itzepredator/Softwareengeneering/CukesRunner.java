@@ -9,4 +9,6 @@ import org.junit.runner.RunWith;
 		features="src/test/resources"
 		)
 
-public class CukesRunner {}
+public class CukesRunner {
+	
+}

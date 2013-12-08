@@ -1,6 +1,6 @@
 # language: de
 
-Funktionalität: Feedback
+Funktionalit�t: Feedback
 	als ein Benutzer
 	um von Ihm besuchte Tankstellen zu Bewerten
 	Der Benutzer möchte eine Tankstelle bewerten.

@@ -1,6 +1,6 @@
 # language: de
 
-Funktionalität: Suche
+Funktionalit�t: Suche
 	als ein Benutzer
 	um den anhand verschiedener Kriterien(Benzinsorte, Marke, Umkreis) eine Tankstelle suchen und finden zu können.
 	Der Benutzer möchte eine Tankstelle anhand verschiedener Kriterien suchen.

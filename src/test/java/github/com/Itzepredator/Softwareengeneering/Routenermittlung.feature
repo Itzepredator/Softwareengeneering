@@ -1,6 +1,6 @@
 # language: de
 
-Funktionalität: Routenermittlung
+Funktionalit�t: Routenermittlung
 	als ein Benutzer
 	um den kürzesten Weg zur ausgewählten Tankstelle zu finden
 	Der Benutzer möchte den kürzesten Weg finden

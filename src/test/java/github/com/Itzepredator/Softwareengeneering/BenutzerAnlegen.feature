@@ -1,6 +1,6 @@
 # language: de
 
-Funktionalität: Benutzer anlegen
+Funktionalit�t: Benutzer anlegen
 	als ein nicht registrierter Benutzer
 	um einen Benutzer in der App/Hompage anzulegen
 	Der unregistrierte Benutzer möchte einen Benutzer anlegen um auf alle Funktionen zugriff zu haben 

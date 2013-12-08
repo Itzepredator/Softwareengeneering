@@ -1,8 +1,8 @@
 # language: de
 
-Funktionalität: Alle Daten anzeigen
+Funktionalit�t: Alle Daten anzeigen
 	der Benutzer möchte sich alle vorhandenen Daten anzeigen lassen
-	Der Benutzer lässt sich alle Daten anzeigen um alle Daten einsehen zu können
+	Der Benutzer lässt sich alle Daten anzeigen um alle Daten einsehen zu k�nnen
 	
 Szenario:(Mainflow) Wenn der Benutzer auf den "Alle Daten anzeigen" Button klickt
 					Dann werden die Daten aus der Tabelle ausgelesen wurden,

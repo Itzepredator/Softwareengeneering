@@ -23,13 +23,13 @@ public class SuchenSQL {
 
 
 
-	public ArrayList<ArrayList> sqlAusfuehren() throws SQLException {
+	public ArrayList<ArrayList<String>> sqlAusfuehren() throws SQLException {
 		Statement stmt = con.createStatement();
   
 		  // Alle Kunden ausgeben
 		  ResultSet rs = stmt.executeQuery(this.sql);
 		  ArrayList<String> list = new ArrayList<String>();
-		  ArrayList<ArrayList> trefferListe = new ArrayList<ArrayList>();
+		  ArrayList<ArrayList<String>> trefferListe = new ArrayList<ArrayList<String>>();
 		  while ( rs.next() )
 		  {
 		   list.add(rs.getString(1));

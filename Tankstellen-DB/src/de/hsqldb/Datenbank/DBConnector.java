@@ -33,8 +33,8 @@ public class DBConnector
       
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
-      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.* from login l");
-      lsql.sqlAusführen("");
+//      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.* from login l");
+//      lsql.sqlAusführen("");
     }
     catch ( SQLException e )
     {
@@ -123,7 +123,7 @@ public class DBConnector
       LoginSQL nrSql = new LoginSQL(con.createStatement(), con, "Select max(Id) from login");
      int nr= nrSql.sqlNr()+1;
       LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN( ID, BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( "+ nr+", '"+benutzerName+"','"+passwort+"','"+benutzerName+"','"+benutzerName+"','"+eMail+"')");
-      lsql.sqlAusführen("");
+      lsql.sqlAusführen();
     }
     catch ( SQLException e )
     {
@@ -167,8 +167,9 @@ public class DBConnector
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);
       SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, "Select t.* from tankstelle t where t.ort='" +ort+ "'");
-      ArrayList<ArrayList> listErgebnis = new ArrayList<ArrayList>();
+      ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
   	  listErgebnis =  lsql.sqlAusfuehren();
+  	  System.out.println(listErgebnis);
   	  
   	  //TODO Verarbeitung der Suche
     }

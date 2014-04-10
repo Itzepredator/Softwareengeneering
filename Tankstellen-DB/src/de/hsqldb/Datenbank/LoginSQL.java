@@ -27,15 +27,19 @@ public class LoginSQL {
 		if(!passwort.isEmpty()){
 		ResultSet rs = stmt.executeQuery(this.sql);
 		r= rs.getString(3).equalsIgnoreCase(passwort);
-		}else{
-		//Update der Benutzerdaten
-		stmt.executeUpdate(this.sql);
-		r= true;
 		}
 		  // Statement schließen
 		  stmt.close();
 		  
 		  return r;
+	}
+
+	public void sqlAusführen() throws SQLException {
+		Statement stmt = con.createStatement();
+		stmt.executeUpdate(this.sql);
+		  // Statement schließen
+		  stmt.close();
+
 	}
 	
 	

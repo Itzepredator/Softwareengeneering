@@ -30,8 +30,8 @@ public class FeedbackSteps {
 	    throw new PendingException();
 	}
 
-	@Dann("^die Daten können in der Rubrik Feedback angezeigt werden.$")
-	public void die_Daten_können_in_der_Rubrik_Feedback_angezeigt_werden() throws Throwable {
+	@Dann("^die Daten kï¿½nnen in der Rubrik Feedback angezeigt werden.$")
+	public void die_Daten_kÃ¶nnen_in_der_Rubrik_Feedback_angezeigt_werden() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}

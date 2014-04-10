@@ -25,14 +25,14 @@ public class SucheSteps {
 	    throw new PendingException();
 	}
 
-	@Dann("^Werden die für den Benutzer entsprechenden Daten aus der Datenbank geladen.$")
-	public void Werden_die_für_den_Benutzer_entsprechenden_Daten_aus_der_Datenbank_geladen() throws Throwable {
+	@Dann("^Werden die fï¿½r den Benutzer entsprechenden Daten aus der Datenbank geladen.$")
+	public void Werden_die_fÃ¼r_den_Benutzer_entsprechenden_Daten_aus_der_Datenbank_geladen() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
 
-	@Wenn("^die für den Benutzer passenden Daten aus der Datenbank geladen werden konnten.$")
-	public void die_für_den_Benutzer_passenden_Daten_aus_der_Datenbank_geladen_werden_konnten() throws Throwable {
+	@Wenn("^die fï¿½r den Benutzer passenden Daten aus der Datenbank geladen werden konnten.$")
+	public void die_fÃ¼r_den_Benutzer_passenden_Daten_aus_der_Datenbank_geladen_werden_konnten() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
@@ -55,8 +55,8 @@ public class SucheSteps {
 	    throw new PendingException();
 	}
 
-	@Dann("^der Benutzer kann die Daten der Abfrage Ändern$")
-	public void der_Benutzer_kann_die_Daten_der_Abfrage_Ändern() throws Throwable {
+	@Dann("^der Benutzer kann die Daten der Abfrage ï¿½ndern$")
+	public void der_Benutzer_kann_die_Daten_der_Abfrage_Ã¤ndern() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}

@@ -15,7 +15,7 @@ public class BenutzerAnlegenSteps {
 	}
 
 	@Dann("^werden die PersÃ¶nlichen Informationen validiert.$")
-	public void werden_die_Persönlichen_Informationen_validiert() throws Throwable {
+	public void werden_die_PersÃ¶nlichen_Informationen_validiert() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
@@ -56,8 +56,8 @@ public class BenutzerAnlegenSteps {
 	    throw new PendingException();
 	}
 
-	@Wenn("^beim validieren der  Persönlichen Informationen ein Fehler auftritt,$")
-	public void beim_validieren_der_Persönlichen_Informationen_ein_Fehler_auftritt() throws Throwable {
+	@Wenn("^beim validieren der  Persï¿½nlichen Informationen ein Fehler auftritt,$")
+	public void beim_validieren_der_PersÃ¶nlichen_Informationen_ein_Fehler_auftritt() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
@@ -68,14 +68,14 @@ public class BenutzerAnlegenSteps {
 	    throw new PendingException();
 	}
 
-	@Dann("^hat der Benutzer die Möglichkeit seine Eingabe zu korrigieren.$")
-	public void hat_der_Benutzer_die_Möglichkeit_seine_Eingabe_zu_korrigieren() throws Throwable {
+	@Dann("^hat der Benutzer die Mï¿½glichkeit seine Eingabe zu korrigieren.$")
+	public void hat_der_Benutzer_die_MÃ¶glichkeit_seine_Eingabe_zu_korrigieren() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
 
-	@Wenn("^die Persönlichen Informationen validiert sind,$")
-	public void die_Persönlichen_Informationen_validiert_sind() throws Throwable {
+	@Wenn("^die Persï¿½nlichen Informationen validiert sind,$")
+	public void die_PersÃ¶nlichen_Informationen_validiert_sind() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}

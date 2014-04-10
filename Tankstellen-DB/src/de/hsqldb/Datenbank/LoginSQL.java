@@ -21,27 +21,34 @@ public class LoginSQL {
 
 
 
-	public void sqlAusführen() throws SQLException {
+	public boolean sqlAusführen(String passwort) throws SQLException {
 		Statement stmt = con.createStatement();
-  
-		  // Alle Kunden ausgeben
-		  ResultSet rs = stmt.executeQuery(this.sql);
-  
-		  while ( rs.next() )
-		  {
-		    String id = rs.getString(1);
-		    String benutzername = rs.getString(2);
-		    String passwort = rs.getString(3);
-		    String nachname = rs.getString(4);
-		    String vorname = rs.getString(5);
-		    String email = rs.getString(6);
-		    System.out.println(id + ", " + benutzername + " " + passwort + ", " + nachname+ ", " + vorname+", " + email);
-		  }
-		   
-		  // Resultset schließen
-		  rs.close();
-  
+		boolean r=false;
+		if(!passwort.isEmpty()){
+		ResultSet rs = stmt.executeQuery(this.sql);
+		r= rs.getString(3).equalsIgnoreCase(passwort);
+		}else{
+		//Update der Benutzerdaten
+		stmt.executeUpdate(this.sql);
+		r= true;
+		}
 		  // Statement schließen
 		  stmt.close();
+		  
+		  return r;
 	}
+	
+	
+	public int sqlNr() throws SQLException {
+		Statement stmt = con.createStatement();
+		
+		//Update der Benutzerdaten
+		 ResultSet rs = stmt.executeQuery(this.sql);
+		 
+		  // Statement schließen
+		  stmt.close();
+		  
+		  return Integer.valueOf(rs.getString(1));
+	}
+	
 }

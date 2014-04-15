@@ -117,7 +117,7 @@
           <a class="navbar-brand" href="#">Tankstellen DB</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
+          <form class="navbar-form navbar-right" method="POST">
             <div class="form-group">
               <input type="text" placeholder="Benutzername" class="form-control">
             </div>
@@ -140,14 +140,16 @@
        <div class="panel panel-default">
         <div class="panel-body">
           <br>
+          <form class="navbar-form navbar-right" method="POST">
           <div class="col-md-4">
-            <input name="Ortssuche" placeholder="Ort" class="form-control" type="text">
+            <input placeholder="Ort" class="form-control" type="text" name="ort">
           </div>
           <div class="pull-right col-lg-8 col-lg-push-1">
             <div class="row"></div>
             <div class="row">
               <div class="col-md-2">
-                <select class="form-control">
+                <select class="form-control" name="tankstelle">
+                  <option></option>
                   <option>Alle</option>
                   <option>Argip</option>
                   <option>Aral</option>
@@ -155,7 +157,8 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <select class="form-control">
+                <select class="form-control" name="spritart">
+                  <option></option>
                   <option>Super(E5)</option>
                   <option>Super(10)</option>
                   <option>Diesel</option>
@@ -164,16 +167,28 @@
                 </select>
               </div>
               <div class="col-md-3">
-                <select class="form-control">
+                <select class="form-control" name="entfernung">
+                  <option></option>
                   <option>5 Km</option>
                   <option>10 Km</option>
                   <option>15 Km</option>
                   <option>20 Km</option>
                 </select>
               </div>
+  
               <div class="col-lg-1">
-                <a class="btn btn-primary">Suchen</a>
-              </div>
+                <!-- <a class="btn btn-primary">Suchen</a>-->
+                <button type="submit" class="btn btn-primary" name="suchen">Suchen</button>
+                </div>
+		</form>
+		<!-- Hier die Parameter ermitteln für die Suche und weiterleiten an Construktor -->
+              <% System.out.println(request.getParameter("suchen")); 
+              	System.out.println(request.getParameter("tankstelle"));
+              	System.out.println(request.getParameter("entfernung"));
+              	System.out.println(request.getParameter("spritart"));
+              	System.out.println(request.getParameter("ort")); 	
+              	%>
+       
             </div>
           </div>
         </div>

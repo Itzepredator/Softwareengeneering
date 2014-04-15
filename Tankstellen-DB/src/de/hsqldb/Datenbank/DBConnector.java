@@ -7,7 +7,7 @@ import java.util.ArrayList;
  
 public class DBConnector
 {
-	private Connection con=null;
+	private static Connection con=null;
  
 
 
@@ -144,10 +144,9 @@ public class DBConnector
 
     }
 	
-	public boolean sucheTankstellen(String ort)
+	public static ArrayList<ArrayList<String>> sucheTankstellenSQL(String ort)
     {
-		boolean ergebnis = false;
-          
+		 ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
     try
     {
         // Treiberklasse laden
@@ -156,7 +155,7 @@ public class DBConnector
     catch ( ClassNotFoundException e )
     {
       System.err.println( "Treiberklasse nicht gefunden!" );
-      return false;
+      
     }
   
     try
@@ -167,9 +166,13 @@ public class DBConnector
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);
       SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, "Select t.* from tankstelle t where t.ort='" +ort+ "'");
-      ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
+     
   	  listErgebnis =  lsql.sqlAusfuehren();
-  	  System.out.println(listErgebnis);
+  	  if(!listErgebnis.isEmpty()){
+  		  System.out.println(listErgebnis);
+  	
+  	  }
+  
   	  
   	  //TODO Verarbeitung der Suche
     }
@@ -188,8 +191,7 @@ public class DBConnector
             }
       }
     }
-	return ergebnis;
-
+	  return listErgebnis;
     }
 
 	

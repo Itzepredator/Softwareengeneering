@@ -28,10 +28,11 @@ public class SuchenSQL {
   
 		  // Alle Kunden ausgeben
 		  ResultSet rs = stmt.executeQuery(this.sql);
-		  ArrayList<String> list = new ArrayList<String>();
+	
 		  ArrayList<ArrayList<String>> trefferListe = new ArrayList<ArrayList<String>>();
-		  while ( rs.next() )
+		  while ( rs.next() && !rs.getString(1).isEmpty() )
 		  {
+		   ArrayList<String> list = new ArrayList<String>();
 		   list.add(rs.getString(1));
 		   list.add(rs.getString(2));
 		   list.add(rs.getString(3));
@@ -44,8 +45,7 @@ public class SuchenSQL {
 		   list.add(rs.getString(10));
 		   
 		   trefferListe.add(list);
-		   
-		   System.out.println(trefferListe);
+	
 		  }
 		   
 		  // Resultset schlieﬂen

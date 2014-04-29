@@ -13,24 +13,15 @@ public class DBConnector
 
 
 	public DBConnector()
-    {
+    { 
+		boolean ergebnis = false;
           
-    try
-    {
-        // Treiberklasse laden
-      Class.forName( "org.hsqldb.jdbcDriver" );
-    }
-    catch ( ClassNotFoundException e )
-    {
-      System.err.println( "Treiberklasse nicht gefunden!" );
-      return;
-    }
-  
+	    ergebnis = ladenDerTreiberKlasse();
+		  
     try
     {
       con = DriverManager.getConnection( 
-              "jdbc:hsqldb:file:C:\\Users\\Andreas\\Downloads\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DBTreiber; shutdown=true", "heinen", "FDSha388" );
-      
+              "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
 //      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.* from login l");
@@ -58,21 +49,12 @@ public class DBConnector
     {
 		boolean ergebnis = false;
           
-    try
-    {
-        // Treiberklasse laden
-      Class.forName( "org.hsqldb.jdbcDriver" );
-    }
-    catch ( ClassNotFoundException e )
-    {
-      System.err.println( "Treiberklasse nicht gefunden!" );
-      return false;
-    }
+	     ergebnis = ladenDerTreiberKlasse();
   
     try
     {
       con = DriverManager.getConnection( 
-              "jdbc:hsqldb:file:C:\\Users\\Andreas\\Downloads\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DBTreiber; shutdown=true", "heinen", "FDSha388" );
+    		  "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
@@ -98,32 +80,23 @@ public class DBConnector
 
     }
 
-	public boolean registrierung(String benutzerName, String passwort, String eMail)
+	public boolean registrierung(String benutzerName, String passwort, String nachname, String vorname, String eMail)
     {
 		boolean ergebnis = false;
           
-    try
-    {
-        // Treiberklasse laden
-      Class.forName( "org.hsqldb.jdbcDriver" );
-    }
-    catch ( ClassNotFoundException e )
-    {
-      System.err.println( "Treiberklasse nicht gefunden!" );
-      return false;
-    }
+		ergebnis= ladenDerTreiberKlasse();
+		   
   
     try
     {
       con = DriverManager.getConnection( 
-              "jdbc:hsqldb:file:C:\\Users\\Andreas\\Downloads\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DBTreiber; shutdown=true", "heinen", "FDSha388" );
+    		  "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
-      LoginSQL nrSql = new LoginSQL(con.createStatement(), con, "Select max(Id) from login");
-     int nr= nrSql.sqlNr()+1;
-      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN( ID, BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( "+ nr+", '"+benutzerName+"','"+passwort+"','"+benutzerName+"','"+benutzerName+"','"+eMail+"')");
-      lsql.sqlAusführen();
+
+      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN(BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( '"+benutzerName+"','"+passwort+"','"+nachname+"','"+vorname+"','"+eMail+"')");
+     ergebnis= lsql.sqlAusführen();
     }
     catch ( SQLException e )
     {
@@ -135,6 +108,7 @@ public class DBConnector
       {
         try {
             con.close();
+            return ergebnis;
             } catch ( SQLException e ) {
                 e.printStackTrace();
             }
@@ -145,34 +119,21 @@ public class DBConnector
     }
 	
 	public static ArrayList<ArrayList<String>> sucheTankstellenSQL(String ort)
-    {
-		 ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
-    try
-    {
-        // Treiberklasse laden
-      Class.forName( "org.hsqldb.jdbcDriver" );
-    }
-    catch ( ClassNotFoundException e )
-    {
-      System.err.println( "Treiberklasse nicht gefunden!" );
-      
-    }
+    { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
+		boolean ergebnis = false;
+     ergebnis = ladenDerTreiberKlasse();
+ 
   
     try
     {
       con = DriverManager.getConnection( 
-              "jdbc:hsqldb:file:C:\\Users\\Andreas\\Downloads\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DBTreiber; shutdown=true", "heinen", "FDSha388" );
+    		  "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);
       SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, "Select t.* from tankstelle t where t.ort='" +ort+ "'");
      
-  	  listErgebnis =  lsql.sqlAusfuehren();
-  	  if(!listErgebnis.isEmpty()){
-  		  System.out.println(listErgebnis);
-  	
-  	  }
-  
+      listErgebnis=lsql.sqlAusfuehren();
   	  
   	  //TODO Verarbeitung der Suche
     }
@@ -191,8 +152,28 @@ public class DBConnector
             }
       }
     }
-	  return listErgebnis;
+	 return listErgebnis;
     }
+
+
+	/**
+	 * 
+	 */
+	public static boolean ladenDerTreiberKlasse() {
+		boolean erg = false;
+		try
+		{
+		    // Treiberklasse laden
+		  Class.forName( "org.hsqldb.jdbcDriver" );
+		  erg=true;
+		}
+		catch ( ClassNotFoundException e )
+		{
+		  System.err.println( "Treiberklasse nicht gefunden!" );
+		  
+		}
+		return erg;
+	}
 
 	
 

@@ -1,34 +1,38 @@
 package github.com.Itzepredator.Softwareengeneering;
 
+import org.junit.Assert;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.de.Wenn;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Angenommen;
+import de.hsqldb.Datenbank.DBConnector;
 
 public class SucheSteps {
 
+	public DBConnector dbcon =new DBConnector();
+	
 	@Angenommen("^seine Anfrage mittels dem Suchen-Button abgesendet hat.$")
 	public void seine_Anfrage_mittels_dem_Suchen_Button_abgesendet_hat() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
+	//TODO implement Methode
+		Assert.assertTrue(true);
 	}
 
 	@Dann("^werden die Filterkriterien validiert.$")
 	public void werden_die_Filterkriterien_validiert() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
+		//TODO implement Methode
+		Assert.assertTrue(true);
 	}
 
 	@Wenn("^die Filterkriterien validiert werden konnten,$")
 	public void die_Filterkriterien_validiert_werden_konnten() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
+		//TODO implement Methode
+		Assert.assertTrue(true);
 	}
 
-	@Dann("^Werden die fuer den Benutzer entsprechenden Daten aus der Datenbank geladen.$")
-	public void Werden_die_fuer_den_Benutzer_entsprechenden_Daten_aus_der_Datenbank_geladen() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
+	@Dann("^Werden die für den Benutzer entsprechenden Daten aus der Datenbank geladen.$")
+	public void Werden_die_für_den_Benutzer_entsprechenden_Daten_aus_der_Datenbank_geladen() throws Throwable {
+		Assert.assertTrue(!dbcon.sucheTankstellenSQL("Karlsruhe").isEmpty());
 	}
 
 	@Wenn("^die fuer den Benutzer passenden Daten aus der Datenbank geladen werden konnten.$")

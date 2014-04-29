@@ -18,7 +18,7 @@ Szenario:(Alternative 1) Wenn Der unregistrierte Benutzer seine Persönlichen In
 					Und diese absendet.
 					Dann werden die Informationen validiert.
 					Wenn beim validieren der  Persönlichen Informationen ein Fehler auftritt,
-					Dann bekommt der Benutzer eine Fehlermeldung 
+					Dann bekommt der Benutzer eine Fehlermeldung mit Informationen angezeigt 
 					Und der Vorgang wird unterbrochen. 
 					Dann hat der Benutzer die Möglichkeit seine Eingabe zu korrigieren.
 					

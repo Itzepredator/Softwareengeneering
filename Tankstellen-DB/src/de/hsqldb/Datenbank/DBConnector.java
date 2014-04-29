@@ -72,7 +72,8 @@ public class DBConnector
     try
     {
       con = DriverManager.getConnection( 
-              "jdbc:hsqldb:file:C:\\Users\\Andreas\\Downloads\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DBTreiber; shutdown=true", "heinen", "FDSha388" );
+    		  //Local DBConnection
+              "jdbc:hsqldb:file:C:\\Users\\Andreas\\Downloads\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);

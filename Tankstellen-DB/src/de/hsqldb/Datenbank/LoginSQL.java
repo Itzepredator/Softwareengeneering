@@ -21,19 +21,21 @@ public class LoginSQL {
 
 
 
-	public boolean sqlAusführen(String passwort) throws SQLException {
-		Statement stmt = con.createStatement();
-		boolean r=false;
-		if(!passwort.isEmpty()){
-		ResultSet rs = stmt.executeQuery(this.sql);
-		r= rs.getString(3).equalsIgnoreCase(passwort);
-		}
-		  // Statement schließen
-		  stmt.close();
-		  
-		  return r;
-	}
 
+	public boolean sqlAusführen(String passwort) throws SQLException {
+	Statement stmt = con.createStatement();
+	boolean r=false;
+	if(!passwort.isEmpty()){
+	ResultSet rs = stmt.executeQuery(this.sql);
+	if(rs.next() && rs.getString("passwort") != null) {
+		r= rs.getString("passwort").toString().equalsIgnoreCase(passwort);
+		}
+	}
+	  // Statement schließen
+	  stmt.close();
+	  
+	  return r;
+}
 	public void sqlAusführen() throws SQLException {
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate(this.sql);

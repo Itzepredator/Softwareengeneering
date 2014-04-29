@@ -8,10 +8,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Andreas/Downloads/hsqldb-2.3.1/hsqldb-2.3.1/hsqldb/lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Andreas/Downloads/hsqldb-2.3.1/hsqldb-2.3.1/hsqldb/lib/sqltool.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Andreas/Downloads/hsqldb-2.3.1/hsqldb-2.3.1/hsqldb/lib/hsqldb-1.7.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Andreas/Downloads/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Andreas/Downloads/jquery-1.9.1.jar/jquery-1.9.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marvin/Documents/HSQLDB/hsqldb-2.3.1/hsqldb-2.3.1/hsqldb/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marvin/Documents/HSQLDB/hsqldb-2.3.1/hsqldb-2.3.1/hsqldb/lib/sqltool.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marvin/Documents/HSQLDB/hsqldb-2.3.1/hsqldb-2.3.1/hsqldb/lib/hsqldb-1.7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marvin/Downloads/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Marvin/Downloads/jquery-1.9.1.jar/jquery-1.9.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

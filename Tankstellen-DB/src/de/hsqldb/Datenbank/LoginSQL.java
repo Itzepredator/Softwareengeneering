@@ -21,6 +21,8 @@ public class LoginSQL {
 
 
 
+
+
 	public boolean sqlAusführen(String passwort) throws SQLException {
 	Statement stmt = con.createStatement();
 	boolean r=false;
@@ -35,7 +37,6 @@ public class LoginSQL {
 	  
 	  return r;
 }
-
 	public boolean sqlAusführen() throws SQLException {
 		Statement stmt = con.createStatement();
 		boolean e = false;

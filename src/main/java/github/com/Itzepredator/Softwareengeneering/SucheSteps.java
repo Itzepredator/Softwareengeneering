@@ -25,14 +25,14 @@ public class SucheSteps {
 	    throw new PendingException();
 	}
 
-	@Dann("^Werden die f�r den Benutzer entsprechenden Daten aus der Datenbank geladen.$")
-	public void Werden_die_für_den_Benutzer_entsprechenden_Daten_aus_der_Datenbank_geladen() throws Throwable {
+	@Dann("^Werden die fuer den Benutzer entsprechenden Daten aus der Datenbank geladen.$")
+	public void Werden_die_fuer_den_Benutzer_entsprechenden_Daten_aus_der_Datenbank_geladen() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
 
-	@Wenn("^die f�r den Benutzer passenden Daten aus der Datenbank geladen werden konnten.$")
-	public void die_für_den_Benutzer_passenden_Daten_aus_der_Datenbank_geladen_werden_konnten() throws Throwable {
+	@Wenn("^die fuer den Benutzer passenden Daten aus der Datenbank geladen werden konnten.$")
+	public void die_fuer_den_Benutzer_passenden_Daten_aus_der_Datenbank_geladen_werden_konnten() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}

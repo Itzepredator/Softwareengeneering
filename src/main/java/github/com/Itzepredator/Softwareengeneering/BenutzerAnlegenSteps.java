@@ -1,23 +1,31 @@
 package github.com.Itzepredator.Softwareengeneering;
 
+import org.junit.Assert;
+import org.junit.Ignore;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.de.Wenn;
 import cucumber.api.java.de.Dann;
 import cucumber.api.java.de.Angenommen;
+import de.hsqldb.Datenbank.DBConnector;
 
 public class BenutzerAnlegenSteps {
 
+	public DBConnector dbcon =new DBConnector();
 
 	@Angenommen("^diese absendet.$")
 	public void diese_absendet() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
+		Assert.assertTrue(true);
 	}
 
-	@Dann("^werden die Persönlichen Informationen validiert.$")
-	public void werden_die_Persönlichen_Informationen_validiert() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
+	@Dann("^werden die Pers�nlichen Informationen validiert.$")
+	public void werden_die_Pers�nlichen_Informationen_validiert() throws Throwable {
+	try {
+	Assert.assertTrue(dbcon.loginCheck("Itze88", "1234", "Heinen-andreas@web.de"));
+	} catch (Exception e) {
+		   throw new PendingException();
+	}
+
 	}
 
 	@Wenn("^die Validierung in Ordnung war,$")
@@ -56,8 +64,8 @@ public class BenutzerAnlegenSteps {
 	    throw new PendingException();
 	}
 
-	@Wenn("^beim validieren der  Pers�nlichen Informationen ein Fehler auftritt,$")
-	public void beim_validieren_der_Persönlichen_Informationen_ein_Fehler_auftritt() throws Throwable {
+	@Wenn("^beim validieren der  Persoenlichen Informationen ein Fehler auftritt,$")
+	public void beim_validieren_der_Persoenlichen_Informationen_ein_Fehler_auftritt() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
@@ -68,14 +76,14 @@ public class BenutzerAnlegenSteps {
 	    throw new PendingException();
 	}
 
-	@Dann("^hat der Benutzer die M�glichkeit seine Eingabe zu korrigieren.$")
-	public void hat_der_Benutzer_die_Möglichkeit_seine_Eingabe_zu_korrigieren() throws Throwable {
+	@Dann("^hat der Benutzer die Moeglichkeit seine Eingabe zu korrigieren.$")
+	public void hat_der_Benutzer_die_Moeglichkeit_seine_Eingabe_zu_korrigieren() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}
 
-	@Wenn("^die Pers�nlichen Informationen validiert sind,$")
-	public void die_Persönlichen_Informationen_validiert_sind() throws Throwable {
+	@Wenn("^die Persoenlichen Informationen validiert sind,$")
+	public void die_Persoenlichen_Informationen_validiert_sind() throws Throwable {
 	    // Express the Regexp above with the code you wish you had
 	    throw new PendingException();
 	}

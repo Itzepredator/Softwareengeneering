@@ -11,8 +11,14 @@ public class DBConnector
 	private String benutzer ="";
 	private String passwort ="";
 	private String email ="";
+	private String vorname ="";
+	private String nachname ="";
 	private boolean login =false;
+	private boolean registrierung =false;
+	
  
+
+
 	public DBConnector()
     { 
 		
@@ -69,8 +75,14 @@ public class DBConnector
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
 
-      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN(BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( '"+benutzerName+"','"+passwort+"','"+nachname+"','"+vorname+"','"+eMail+"')");
+      LoginSQL lsql1= new LoginSQL(con.createStatement(),con, "select max(id) as id from login;");
+      int id= lsql1.sqlNr()+1;
+      
+      
+      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN (ID, BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( "+id+",'"+benutzerName+"','"+passwort+"','"+nachname+"','"+vorname+"','"+eMail+"');");
      ergebnis= lsql.sqlAusführen();
+     con.commit();
+
     }
     catch ( SQLException e )
     {
@@ -217,6 +229,14 @@ public class DBConnector
   	return true;
   }
 
+    private void loescheBenutzerDatenAusSpeicher(){
+    	benutzer ="";
+    	passwort ="";
+    	email ="";
+    	vorname ="";
+    	nachname ="";
+    }
+    
  	public void setCon(Connection con) {
  		this.con = con;
  	}
@@ -227,7 +247,7 @@ public class DBConnector
 
 
 	public void setBenutzer(String benutzer) {
-		System.out.println(benutzer);
+		//System.out.println(benutzer);
 		this.benutzer = benutzer;
 	}
 
@@ -238,7 +258,7 @@ public class DBConnector
 
 
 	public void setPasswort(String passwort) {
-		System.out.println(passwort);
+		//System.out.println(passwort);
 		this.passwort = passwort;
 	}
 	
@@ -249,7 +269,7 @@ public class DBConnector
 
 
 	public void setEmail(String email) {
-		System.out.println(email);
+		//	System.out.println(email);
 		this.email = email;
 	}
 	
@@ -257,7 +277,7 @@ public class DBConnector
 
 
 	public boolean isLogin() {
-		if(!getBenutzer().isEmpty() || !getPasswort().isEmpty()){
+		if(!getBenutzer().isEmpty() && !getPasswort().isEmpty()){
 		return loginCheck(getBenutzer(), getPasswort());
 		}else {
 			return false;
@@ -269,6 +289,39 @@ public class DBConnector
 		this.login = login;
 	}
 
+	public boolean isRegistrierung() {
+		//System.out.println("isRegistrierung");
+		if(!getBenutzer().isEmpty() && !getPasswort().isEmpty() && !getEmail().isEmpty()){
+			return registrierung(getBenutzer(), getPasswort(), getNachname(), getVorname(), getEmail());
+			}else {
+				return false;
+			}
+	}
 
+
+	public void setRegistrierung(boolean registrierung) {
+		this.registrierung = registrierung;
+	}
+
+	public String getVorname() {
+		return vorname;
+	}
+
+
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
+	}
+
+
+	public String getNachname() {
+		return nachname;
+	}
+
+	public void setNachname(String nachname) {
+		this.nachname = nachname;
+	}
 	
+	public void setWerteZurueck(String wert){
+	     loescheBenutzerDatenAusSpeicher();
+	}
 }

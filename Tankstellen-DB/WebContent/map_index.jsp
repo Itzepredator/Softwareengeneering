@@ -110,12 +110,96 @@
   </head>
   
   
-
-  <body>
-  <!-- Import der Beans -->
+    <!-- Import der Beans -->
   <jsp:useBean id="dbconnector" class="de.hsqldb.Datenbank.DBConnector"></jsp:useBean>
   
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <!-- Modal -->
+	 	 <form role="form" method="POST">
+		  <div class="modal fade" id="modalRegistrieren" role="dialog" arial-labelledby="modalRegistrierenLabel" aria-hidden="true">
+		   <div class="modal-dialog">
+		    <div class="modal-content">
+			 <div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+			  </button>
+			  <h4 class="modal-title" id="modalRegistrierenLabel">
+					Registrieren
+			  </h4>
+			 </div>
+			 <div class="modal-body">
+
+			   <div class="row">
+			    <div class="col-md-5">
+				 <div class="form-group">
+				  <label for="feldEmail">
+						E-Mail-Adresse
+				  </label>
+				  <input type="text" class="form-control" name="email1" id="feldEmail" placeholder="Email-Adresse eingeben">
+				  <jsp:setProperty name="dbconnector" property="email" param="email1"/>
+				 </div>
+				</div>
+				<div class="col-md-5">
+				 <div class="form-group">
+				  <label for="feldVorname">
+						Vorname
+				  </label>
+				  <input type="text" class="form-control" name="vorname1" id="feldVorname" placeholder="Vorname eingeben">
+				  <jsp:setProperty name="dbconnector" property="vorname" param="vorname1"/>
+				 </div>
+				 <div class="col-md-5">
+				 <div class="form-group">
+				  <label for="feldNachname">
+					Nachname
+				  </label>
+				  <input type="text" class="form-control" name="nachname1" id="feldNachname" placeholder="Nachname eingeben">
+				  <jsp:setProperty name="dbconnector" property="nachname" param="nachname1"/>
+				 </div>
+				</div>
+				</div>
+				<div class="col-md-5">
+				 <div class="form-group">
+				  <label for="feldUsername">
+						Benutzername
+				  </label>
+				  <input type="text" class="form-control" name="benutzername1" id="feldUsername" placeholder="Benutzername eingeben">
+				  <jsp:setProperty name="dbconnector" property="benutzer" param="benutzername1"/>
+				 </div>
+				</div>
+			   </div>
+			   <div class="row">
+			    <div class="col-md-5">
+				 <div class="form-group">
+				  <label for="feldPasswort">
+						Passwort
+				  </label>
+				  <input type="password" class="form-control" name="passwort1" id="feldPasswort1" placeholder="Passwort eingeben">
+				  <jsp:setProperty name="dbconnector" property="passwort" param="passwort1"/>
+				 </div>
+				 <div class="form-group">
+				  <input type="password" class="form-control" id="feldPasswort2" placeholder="Passwort wiederholen">
+				  <jsp:setProperty name="dbconnector" property="passwort" param="passwort1"/>
+				 </div>
+				</div>
+			   </div>
+	
+			 </div>
+			 <div class="modal-footer">
+			  <button type="submit" class="btn btn-default" data-dismiss="modal">
+					Schließen
+			  </button>
+			  <button type="submit" class="btn btn-primary">
+					Konto erstellen
+			  </button>
+			 </div>
+			</div>
+		   </div>
+		  </div>
+		 </form>
+  
+  
+
+  <body>
+   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -136,12 +220,15 @@
               <input type="password" placeholder="Passwort" name="passwort" class="form-control">
               <jsp:setProperty name="dbconnector" property="passwort" param="passwort"/>
             </div>
+             <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>
+             <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> 
+              <jsp:setProperty name="dbconnector" property="werteZurueck" param="a"/>
             <button type="submit" class="btn btn-success">Einloggen</button>
-            <p><c:out value="${dbconnector.login}"/></p>
-			<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrieren">
+           <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrieren">
 				Registrieren
 			</button>
-          </form>
+			
+		 </form>
 		 
 		  
 		  
@@ -214,70 +301,7 @@
 	
 	<!--<div id="map-test"/> -->
 
-	 <!-- Modal -->
-	 	 <form role="form" method="POST">
-		  <div class="modal fade" id="modalRegistrieren" role="dialog" arial-labelledby="modalRegistrierenLabel" aria-hidden="true">
-		   <div class="modal-dialog">
-		    <div class="modal-content">
-			 <div class="modal-header">
-			  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-					&times;
-			  </button>
-			  <h4 class="modal-title" id="modalRegistrierenLabel">
-					Registrieren
-			  </h4>
-			 </div>
-			 <div class="modal-body">
-
-			   <div class="row">
-			    <div class="col-md-5">
-				 <div class="form-group">
-				  <label for="feldEmail">
-						E-Mail-Adresse
-				  </label>
-				  <input type="text" class="form-control" name="email1" id="feldEmail" placeholder="Email-Adresse eingeben">
-				  <jsp:setProperty name="dbconnector" property="email" param="email1"/>
-				 </div>
-				</div>
-				<div class="col-md-5">
-				 <div class="form-group">
-				  <label for="feldUsername">
-						Benutzername
-				  </label>
-				  <input type="text" class="form-control" name="benutzername1" id="feldUsername" placeholder="Benutzername eingeben">
-				  <jsp:setProperty name="dbconnector" property="benutzer" param="benutzername1"/>
-				 </div>
-				</div>
-			   </div>
-			   <div class="row">
-			    <div class="col-md-5">
-				 <div class="form-group">
-				  <label for="feldPasswort">
-						Passwort
-				  </label>
-				  <input type="password" class="form-control" name="passwort1" id="feldPasswort1" placeholder="Passwort eingeben">
-				  <jsp:setProperty name="dbconnector" property="passwort" param="passwort1"/>
-				 </div>
-				 <div class="form-group">
-				  <input type="password" class="form-control" id="feldPasswort2" placeholder="Passwort wiederholen">
-				  <jsp:setProperty name="dbconnector" property="passwort" param="passwort1"/>
-				 </div>
-				</div>
-			   </div>
 	
-			 </div>
-			 <div class="modal-footer">
-			  <button type="submit" class="btn btn-default" data-dismiss="modal">
-					Schließen
-			  </button>
-			  <button type="submit" class="btn btn-primary">
-					Konto erstellen
-			  </button>
-			 </div>
-			</div>
-		   </div>
-		  </div>
-		 </form>
 		  
       <hr>
       <footer>

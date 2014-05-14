@@ -44,7 +44,7 @@ public class LoginSQL {
 			stmt.executeUpdate(this.sql);
 			  // Statement schlieﬂen
 			  stmt.close();
-			  e=true;
+			  e =true;
 		}
 			return e;
 	}
@@ -52,14 +52,16 @@ public class LoginSQL {
 	
 	public int sqlNr() throws SQLException {
 		Statement stmt = con.createStatement();
-		
+		 int a =9999;
 		//Update der Benutzerdaten
 		 ResultSet rs = stmt.executeQuery(this.sql);
-		 
+		 while(rs.next()){
+		 a =Integer.valueOf(rs.getString("id")) ;
+		 }
 		  // Statement schlieﬂen
 		  stmt.close();
-		  
-		  return Integer.valueOf(rs.getString(1));
+		 
+		  return a;
 	}
 	
 	

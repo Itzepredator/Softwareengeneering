@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="de">
   <head>
@@ -109,6 +112,9 @@
   
 
   <body>
+  <!-- Import der Beans -->
+  <jsp:useBean id="dbconnector" class="de.hsqldb.Datenbank.DBConnector"></jsp:useBean>
+  
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -123,12 +129,15 @@
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <input type="text" placeholder="Benutzername" class="form-control">
+              <input type="text" placeholder="Benutzername" name="benutzername" class="form-control">
+              <jsp:setProperty name="dbconnector" property="benutzer" param="benutzername"/>
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Passwort" class="form-control">
+              <input type="password" placeholder="Passwort" name="passwort" class="form-control">
+              <jsp:setProperty name="dbconnector" property="passwort" param="passwort"/>
             </div>
             <button type="submit" class="btn btn-success">Einloggen</button>
+            <p><c:out value="${dbconnector.login}"/></p>
 			<button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrieren">
 				Registrieren
 			</button>
@@ -139,7 +148,7 @@
 		  <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">‹ber uns</a></li>
+            <li><a href="#about">√úber uns</a></li>
             <li><a href="#contact">Kontakt</a></li>
           </ul>
         </div>
@@ -205,49 +214,8 @@
 	
 	<!--<div id="map-test"/> -->
 
-
-
-	
-	
-	
- 
-
-  
-
- 
- 
-
-
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-
-	  <!--<div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
-	  </div>-->
-	<!--Map einblenden-->
-	<!--<div id="map-test"/>-->
-	
-      <!-- Example row of columns -->
-      <!--<div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-      </div>-->
 	 <!-- Modal -->
+	 	 <form role="form" method="POST">
 		  <div class="modal fade" id="modalRegistrieren" role="dialog" arial-labelledby="modalRegistrierenLabel" aria-hidden="true">
 		   <div class="modal-dialog">
 		    <div class="modal-content">
@@ -260,15 +228,15 @@
 			  </h4>
 			 </div>
 			 <div class="modal-body">
-			  <form role="form" method="POST">
+
 			   <div class="row">
 			    <div class="col-md-5">
 				 <div class="form-group">
 				  <label for="feldEmail">
 						E-Mail-Adresse
 				  </label>
-				  <input type="text" class="form-control" id="feldEmail" placeholder="Email-Adresse eingeben">
-				  </input>
+				  <input type="text" class="form-control" name="email1" id="feldEmail" placeholder="Email-Adresse eingeben">
+				  <jsp:setProperty name="dbconnector" property="email" param="email1"/>
 				 </div>
 				</div>
 				<div class="col-md-5">
@@ -276,8 +244,8 @@
 				  <label for="feldUsername">
 						Benutzername
 				  </label>
-				  <input type="text" class="form-control" id="feldUsername" placeholder="Benutzername eingeben">
-				  </input>
+				  <input type="text" class="form-control" name="benutzername1" id="feldUsername" placeholder="Benutzername eingeben">
+				  <jsp:setProperty name="dbconnector" property="benutzer" param="benutzername1"/>
 				 </div>
 				</div>
 			   </div>
@@ -287,20 +255,20 @@
 				  <label for="feldPasswort">
 						Passwort
 				  </label>
-				  <input type="password" class="form-control" id="feldPasswort1" placeholder="Passwort eingeben">
-				  </input>
+				  <input type="password" class="form-control" name="passwort1" id="feldPasswort1" placeholder="Passwort eingeben">
+				  <jsp:setProperty name="dbconnector" property="passwort" param="passwort1"/>
 				 </div>
 				 <div class="form-group">
 				  <input type="password" class="form-control" id="feldPasswort2" placeholder="Passwort wiederholen">
-				  </input>
+				  <jsp:setProperty name="dbconnector" property="passwort" param="passwort1"/>
 				 </div>
 				</div>
 			   </div>
-			  </form>
+	
 			 </div>
 			 <div class="modal-footer">
 			  <button type="submit" class="btn btn-default" data-dismiss="modal">
-					Schlieﬂen
+					Schlie√üen
 			  </button>
 			  <button type="submit" class="btn btn-primary">
 					Konto erstellen
@@ -309,7 +277,8 @@
 			</div>
 		   </div>
 		  </div>
-
+		 </form>
+		  
       <hr>
       <footer>
         <p>&copy; Smoking Brains 2013</p>

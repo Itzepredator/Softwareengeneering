@@ -8,44 +8,18 @@ import java.util.ArrayList;
 public class DBConnector
 {
 	private static Connection con=null;
+	private String benutzer ="";
+	private String passwort ="";
+	private String email ="";
+	private boolean login =false;
  
-
-
-
 	public DBConnector()
     { 
-		boolean ergebnis = false;
-          
-	    ergebnis = ladenDerTreiberKlasse();
-		  
-    try
-    {
-      con = DriverManager.getConnection( 
-              "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
-      //Sql zusammenbauen und ausführen
-//     testSQLAusfuehren(con);
-//      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.* from login l");
-//      lsql.sqlAusführen("");
-    }
-    catch ( SQLException e )
-    {
-      e.printStackTrace();
-    }
-    finally
-    {
-      if ( con != null )
-      {
-        try {
-            con.close();
-            } catch ( SQLException e ) {
-                e.printStackTrace();
-            }
-      }
-    }
+		
     }
 
 
-	public boolean loginCheck(String benutzerName, String passwort, String eMail)
+	public boolean loginCheck(String benutzerName, String passwort)
     {
 		boolean ergebnis = false;
           
@@ -54,8 +28,8 @@ public class DBConnector
     try
     {
       con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
-      
+    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
       LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.passwort from login l where l.benutzername ='" +benutzerName+ "'");
@@ -90,7 +64,7 @@ public class DBConnector
     try
     {
       con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
@@ -127,7 +101,7 @@ public class DBConnector
     try
     {
       con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Marvin\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);
@@ -164,7 +138,7 @@ public class DBConnector
 		try
 		{
 		    // Treiberklasse laden
-		  Class.forName( "org.hsqldb.jdbcDriver" );
+			Class.forName("org.hsqldb.jdbcDriver");
 		  erg=true;
 		}
 		catch ( ClassNotFoundException e )
@@ -246,4 +220,55 @@ public class DBConnector
  	public void setCon(Connection con) {
  		this.con = con;
  	}
+
+	public String getBenutzer() {
+		return benutzer;
+	}
+
+
+	public void setBenutzer(String benutzer) {
+		System.out.println(benutzer);
+		this.benutzer = benutzer;
+	}
+
+
+	public String getPasswort() {
+		return passwort;
+	}
+
+
+	public void setPasswort(String passwort) {
+		System.out.println(passwort);
+		this.passwort = passwort;
+	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		System.out.println(email);
+		this.email = email;
+	}
+	
+
+
+
+	public boolean isLogin() {
+		if(!getBenutzer().isEmpty() || !getPasswort().isEmpty()){
+		return loginCheck(getBenutzer(), getPasswort());
+		}else {
+			return false;
+		}
+	}
+
+
+	public void setLogin(boolean login) {
+		this.login = login;
+	}
+
+
+	
 }

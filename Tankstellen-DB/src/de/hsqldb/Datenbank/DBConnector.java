@@ -15,8 +15,12 @@ public class DBConnector
 	private String nachname ="";
 	private boolean login =false;
 	private boolean registrierung =false;
-	
+	private String ort="";
+	private String entfernung ="";
+	private String sorte="";
+	private String tankstelle="";
  
+
 
 
 	public DBConnector()
@@ -104,7 +108,7 @@ public class DBConnector
 
     }
 	
-	public static ArrayList<ArrayList<String>> sucheTankstellenSQL(String ort)
+	public static ArrayList<ArrayList<String>> sucheAlleTankstellenSQL()
     { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
 		boolean ergebnis = false;
      ergebnis = ladenDerTreiberKlasse();
@@ -117,11 +121,60 @@ public class DBConnector
       
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);
-      SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, "Select t.* from tankstelle t where t.ort='" +ort+ "'");
+      String sql = "";
+      		 
+      		 sql += "Select t.* from tankstelle t where 1=1";
+      
+      SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
      
       listErgebnis=lsql.sqlAusfuehren();
-  	  
-  	  //TODO Verarbeitung der Suche
+  	  //TODO übergabe an c:Set in der JSP
+    }
+    catch ( SQLException e )
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      if ( con != null )
+      {
+        try {
+            con.close();
+            } catch ( SQLException e ) {
+                e.printStackTrace();
+            }
+      }
+    }
+	 return listErgebnis;
+    }
+
+	
+	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort)
+    { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
+		boolean ergebnis = false;
+     ergebnis = ladenDerTreiberKlasse();
+ 
+  
+    try
+    {
+      con = DriverManager.getConnection( 
+    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+      
+      //Sql zusammenbauen und ausführen
+      //testSQLAusfuehren(con);
+      String sql = "";
+      		 
+      		 sql += "Select t.* from tankstelle t where 1=1";
+      		if(!ort.isEmpty()){
+      		sql += "and t.name like ('%" +ort+ "%')";
+      		sql += "or t.Strasse like ('%" +ort+ "%')";
+      		sql += "or t.ort like ('%" +ort+ "%')";
+      		sql += "or t.plz like ('%" +ort+ "%')";}
+      
+      SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
+     
+      listErgebnis=lsql.sqlAusfuehren();
+  	  //TODO übergabe an c:Set in der JSP
     }
     catch ( SQLException e )
     {
@@ -323,5 +376,46 @@ public class DBConnector
 	
 	public void setWerteZurueck(String wert){
 	     loescheBenutzerDatenAusSpeicher();
+	}
+	
+
+
+	public String getOrt() {
+		return ort;
+	}
+
+
+	public void setOrt(String ort) {
+		this.ort = ort;
+	}
+
+
+	public String getEntfernung() {
+		return entfernung;
+	}
+
+
+	public void setEntfernung(String entfernung) {
+		this.entfernung = entfernung;
+	}
+
+
+	public String getSorte() {
+		return sorte;
+	}
+
+
+	public void setSorte(String sorte) {
+		this.sorte = sorte;
+	}
+
+
+	public String getTankstelle() {
+		return tankstelle;
+	}
+
+
+	public void setTankstelle(String tankstelle) {
+		this.tankstelle = tankstelle;
 	}
 }

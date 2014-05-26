@@ -7,6 +7,9 @@ import java.util.ArrayList;
  
 public class DBConnector
 {
+	public static String user ="Andreas";
+//	public static String user ="Marvin";
+	
 	private static Connection con=null;
 	private String benutzer ="";
 	private String passwort ="";
@@ -40,7 +43,7 @@ public class DBConnector
     try
     {
       con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+    		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
 
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
@@ -75,8 +78,8 @@ public class DBConnector
   
     try
     {
-      con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+        con = DriverManager.getConnection( 
+      		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
 //     testSQLAusfuehren(con);
@@ -118,8 +121,8 @@ public class DBConnector
   
     try
     {
-      con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+        con = DriverManager.getConnection( 
+      		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);
@@ -165,8 +168,8 @@ public class DBConnector
   
     try
     {
-      con = DriverManager.getConnection( 
-    		  "jdbc:hsqldb:file:C:\\Users\\Andreas\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
+        con = DriverManager.getConnection( 
+      		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
       //testSQLAusfuehren(con);

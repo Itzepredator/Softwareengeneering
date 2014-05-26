@@ -27,74 +27,7 @@
     <!-- Custom styles for this template -->
     <link href="css/map_index.css" rel="stylesheet">
 	 
-	<!--Maps API-->
-	<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
-    </script>
-	
-	<!--Funktionen-->
-	<script>
-	  //google.maps.visualRefresh = true;
-	  var map; 
-	  var geocoder;
-	  
-      function initialize() {
-		geocoder = new google.maps.Geocoder();
-		
-		var mapOptions = {
-		zoom: 15,
-	  <!--Spezieller Ort als Startpunkt festlegen (Zentral) -->
-	  <!--center: new google.maps.LatLng(-34.397, 150.644)-->
-	  }
-	  // Try HTML5 geolocation
-	  if(navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-			var infowindow = new google.maps.InfoWindow({
-			map: map,
-			position: pos,
-			content: 'Dein aktueller Standpunkt.'
-			});
-			map.setCenter(pos);
-			}, function() {
-			handleNoGeolocation(true);
-			});
-		} else {
-    // Browser doesn't support Geolocation
-		handleNoGeolocation(false);
-	   }
-	  map = new google.maps.Map(document.getElementById('map-test'), mapOptions);	   
-	  }
-	  	function codeAddress() {
-		var address = document.getElementById('address').value;
-		geocoder.geocode( { 'address': address}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			map.setCenter(results[0].geometry.location);
-		var marker = new google.maps.Marker({
-		map: map,
-		position: results[0].geometry.location
-		});
-		} else {
-		  alert('Geocode was not successful for the following reason: ' + status);
-		  }
-		});
-		}
-		function handleNoGeolocation(errorFlag) {
-			if (errorFlag) {
-				var content = 'Error: The Geolocation service failed.';
-			} else {
-				var content = 'Error: Your browser doesn\'t support geolocation.';
-			}
-			var options = {
-				map: map,
-				position: new google.maps.LatLng(60, 105),
-				content: content
-			};
-			var infowindow = new google.maps.InfoWindow(options);
-			map.setCenter(options.position);
-		}
-		google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -248,6 +181,7 @@
 		  <form>
           <div class="col-md-4">
             <input name="Ortssuche" id="address" placeholder="Ort" class="form-control" type="text">
+                           <jsp:setProperty property="ort" name="dbconnector" param="Ortssuche"/>
 		  </div>
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>
@@ -268,8 +202,9 @@
                   <option>Super(10)</option>
                   <option>Diesel</option>
                   <option>V-Power Diesel</option>
-                  <option>usw</option>
+                  <option>usw</option> 
                 </select>
+               <jsp:setProperty property="sorte" name="dbconnector" param="spritart"/>
               </div>
               <div class="col-md-3">
                 <select name="entfernung" class="form-control">
@@ -281,7 +216,7 @@
                 </select>
               </div>
               <div class="col-md-1">
-                <input class="btn btn-primary" type="button" value="Suchen" onclick="codeAddress()">
+                <input class="btn btn-primary" type="button" value="Suchen" onclick="codeAddress()">       
               </div>
 			</form>
             </div>
@@ -301,8 +236,91 @@
 	
 	<!--<div id="map-test"/> -->
 
+		<!--Maps API-->
+	<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
+    </script>
 	
-		  
+	<!--Funktionen-->
+	<script>
+	  //google.maps.visualRefresh = true;
+	  var map; 
+	  var geocoder;
+	  
+      function initialize() {
+		geocoder = new google.maps.Geocoder();
+		
+		var mapOptions = {
+		zoom: 15
+	  }
+	  // Try HTML5 geolocation
+	  if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+			var infowindow = new google.maps.InfoWindow({
+			map: map,
+			position: pos,
+			content: 'Dein aktueller Standpunkt.'
+			});
+			map.setCenter(pos);
+			}, function() {
+			handleNoGeolocation(true);
+			});
+		} else {
+    // Browser doesn't support Geolocation
+		handleNoGeolocation(false);
+	   }
+	  map = new google.maps.Map(document.getElementById('map-test'), mapOptions);	   
+	  }
+      
+      function toggleBounce() {
+
+    	  if (marker.getAnimation() != null) {
+    	    marker.setAnimation(null);
+    	  } else {
+    	    marker.setAnimation(google.maps.Animation.BOUNCE);
+    	  }
+    	}
+
+      
+	  	function codeAddress() {
+		var address = document.getElementById('address').value;
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+		var marker = new google.maps.Marker({
+			   animation: google.maps.Animation.DROP,	
+		map: map,
+		position: results[0].geometry.location
+		});
+		  google.maps.event.addListener(marker, 'click', toggleBounce);
+
+		} else {
+		  alert('Geocode was not successful for the following reason: ' + status);
+		  }
+		});
+		}
+		function handleNoGeolocation(errorFlag) {
+			if (errorFlag) {
+				var content = 'Error: The Geolocation service failed.';
+			} else {
+				var content = 'Error: Your browser doesn\'t support geolocation.';
+			}
+			var options = {
+				map: map,
+				position: new google.maps.LatLng(60, 105),
+				content: content
+			};
+			var infowindow = new google.maps.InfoWindow(options);
+			map.setCenter(options.position);
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+	
+	
+	  <c:out value="${dbconnector.tankstellenList}"></c:out>	  
       <hr>
       <footer>
         <p>&copy; Smoking Brains 2013</p>

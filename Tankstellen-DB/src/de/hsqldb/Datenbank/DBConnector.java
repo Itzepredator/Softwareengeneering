@@ -19,7 +19,9 @@ public class DBConnector
 	private String entfernung ="";
 	private String sorte="";
 	private String tankstelle="";
+	private static ArrayList<ArrayList<String>> tankstellenList = new ArrayList<ArrayList<String>>();
  
+
 
 
 
@@ -128,7 +130,13 @@ public class DBConnector
       SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
      
       listErgebnis=lsql.sqlAusfuehren();
-  	  //TODO übergabe an c:Set in der JSP
+      for(ArrayList<String> l : listErgebnis){
+    	  for(String l1: l){
+    		  l1.trim();
+    	  }
+      }
+      
+      tankstellenList=listErgebnis;
     }
     catch ( SQLException e )
     {
@@ -149,7 +157,7 @@ public class DBConnector
     }
 
 	
-	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort)
+	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort, String sorte)
     { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
 		boolean ergebnis = false;
      ergebnis = ladenDerTreiberKlasse();
@@ -164,17 +172,24 @@ public class DBConnector
       //testSQLAusfuehren(con);
       String sql = "";
       		 
-      		 sql += "Select t.* from tankstelle t where 1=1";
+      		 sql += "Select t.* from tankstelle t where 1=1 ";
       		if(!ort.isEmpty()){
-      		sql += "and t.name like ('%" +ort+ "%')";
-      		sql += "or t.Strasse like ('%" +ort+ "%')";
-      		sql += "or t.ort like ('%" +ort+ "%')";
-      		sql += "or t.plz like ('%" +ort+ "%')";}
+      		sql += "and t.name like ('%" +ort+ "%') ";
+      		sql += "or t.Strasse like ('%" +ort+ "%') ";
+      		sql += "or t.ort like ('%" +ort+ "%') ";
+      		sql += "or t.plz like ('%" +ort+ "%') ";}
       
       SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
      
       listErgebnis=lsql.sqlAusfuehren();
-  	  //TODO übergabe an c:Set in der JSP
+      for(ArrayList<String> l : listErgebnis){
+    	  for(String l1: l){
+    		  l1.trim();
+    	  }
+      }
+      tankstellenList=listErgebnis;
+//      System.out.println(listErgebnis);
+     
     }
     catch ( SQLException e )
     {
@@ -407,6 +422,7 @@ public class DBConnector
 
 	public void setSorte(String sorte) {
 		this.sorte = sorte;
+		sucheTankstelleSQL(getOrt(), getSorte());
 	}
 
 
@@ -418,4 +434,19 @@ public class DBConnector
 	public void setTankstelle(String tankstelle) {
 		this.tankstelle = tankstelle;
 	}
+	
+
+	public ArrayList<ArrayList<String>> getTankstellenList() {
+		return tankstellenList;
+	}
+
+
+	public void setTankstellenList(ArrayList<ArrayList<String>> testList) {
+		this.tankstellenList = testList;
+	}
+
+	public void setAlleTankstellen(){
+		sucheAlleTankstellenSQL();
+	}
+
 }

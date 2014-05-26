@@ -181,7 +181,7 @@
 		  <form>
           <div class="col-md-4">
             <input name="Ortssuche" id="address" placeholder="Ort" class="form-control" type="text">
-                           <jsp:setProperty property="ort" name="dbconnector" param="Ortssuche"/>
+           <jsp:setProperty property="ort" name="dbconnector" param="Ortssuche"/>
 		  </div>
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>
@@ -204,7 +204,6 @@
                   <option>V-Power Diesel</option>
                   <option>usw</option> 
                 </select>
-               <jsp:setProperty property="sorte" name="dbconnector" param="spritart"/>
               </div>
               <div class="col-md-3">
                 <select name="entfernung" class="form-control">

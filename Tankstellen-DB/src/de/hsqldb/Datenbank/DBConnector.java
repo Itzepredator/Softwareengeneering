@@ -27,7 +27,7 @@ public class DBConnector
 
 	public DBConnector()
     { 
-		
+		sucheAlleTankstellenSQL();
     }
 
 
@@ -445,8 +445,5 @@ public class DBConnector
 		this.tankstellenList = testList;
 	}
 
-	public void setAlleTankstellen(){
-		sucheAlleTankstellenSQL();
-	}
 
 }

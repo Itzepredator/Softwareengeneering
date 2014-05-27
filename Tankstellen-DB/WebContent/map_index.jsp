@@ -319,7 +319,33 @@
 
 	
 	
-	  <c:out value="${dbconnector.tankstellenList}"></c:out>	  
+	  <!--<c:out value="${dbconnector.tankstellenList}"></c:out>-->	  
+	  <div class="table-responsive">
+	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/>
+	  <table class="table table-bordered table-hover">
+	  <tr>
+	  	<td><b>Nr</b></td>
+	  	<td><b>Name</b></td>
+	  	<td><b>Straße</b></td>
+	  	<td><b>Ort</b></td>
+	  	<td><b>PLZ</b></td>
+	  	<td><b>E10</b></td>
+	  	<td><b>Super</b></td>
+	  	<td><b>SuperPlus</b></td>
+	  	<td><b>Diesel</b></td>
+	  	<td><b>VPowerDiesel</b></td>
+	  </tr>
+	  <c:forEach items="${tankstellenList}" var="zeile">
+	  <tr>
+	  	<c:forEach  items ="${zeile}" var="spaltenInhalt">
+	  	  <td>
+	  		  <c:out value="${spaltenInhalt}"/>
+	  	</td>
+	  	</c:forEach>
+	  </tr>   
+    </c:forEach>
+	 </table>
+	 </div>
       <hr>
       <footer>
         <p>&copy; Smoking Brains 2013</p>

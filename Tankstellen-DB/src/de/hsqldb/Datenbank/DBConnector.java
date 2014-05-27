@@ -140,6 +140,23 @@ public class DBConnector
       }
       
       tankstellenList=listErgebnis;
+//      for(ArrayList<String> z: listErgebnis){
+//    	  for(int i = 0 i<z.length() , i++){
+//    		  t.setNr(z1);
+//    		  t.setDiesel(diesel)
+//    		  
+//    			private String name="";
+//    			private String strasse = "";
+//    			private String ort="";
+//    			private String plz="";
+//    			private String e10= "";
+//    			private String ssuper= "";
+//    			private String superplus= "";
+//    			private String diesel= "";
+//    			private String vpowerdiesel= "";
+//    	  }
+//      }
+////      t.setNr();
     }
     catch ( SQLException e )
     {

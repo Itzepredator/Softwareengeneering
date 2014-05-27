@@ -7,8 +7,8 @@ import java.util.ArrayList;
  
 public class DBConnector
 {
-	public static String user ="Andreas";
-//	public static String user ="Marvin";
+//	public static String user ="Andreas";
+	public static String user ="Marvin";
 	
 	private static Connection con=null;
 	private String benutzer ="";
@@ -177,7 +177,7 @@ public class DBConnector
     }
 
 	
-	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort, String sorte)
+	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort)
     { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
 		boolean ergebnis = false;
      ergebnis = ladenDerTreiberKlasse();
@@ -416,7 +416,10 @@ public class DBConnector
 
 
 	public String getOrt() {
+		if(ort!=null){
 		return ort;
+		}
+		return "";
 	}
 
 
@@ -442,7 +445,6 @@ public class DBConnector
 
 	public void setSorte(String sorte) {
 		this.sorte = sorte;
-		sucheTankstelleSQL(getOrt(), getSorte());
 	}
 
 

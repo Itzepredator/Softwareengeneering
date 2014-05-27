@@ -1,3 +1,4 @@
+<%@page import="de.hsqldb.Datenbank.DBConnector"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
@@ -181,7 +182,6 @@
 		  <form>
           <div class="col-md-4">
             <input name="Ortssuche" id="address" placeholder="Ort" class="form-control" type="text">
-           <jsp:setProperty property="ort" name="dbconnector" param="Ortssuche"/>
 		  </div>
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>
@@ -214,15 +214,18 @@
                   <option>20 Km</option>
                 </select>
               </div>
-              <div class="col-md-1">
-                <input class="btn btn-primary" type="button" value="Suchen" onclick="codeAddress()">       
+              <div class="col-md-1">     
+                <input class="btn btn-primary" type="button" value="Suchen" onclick="sucheAusfuehren()" onkeydown="sucheAusfuehren()">       
               </div>
 			</form>
             </div>
           </div>
         </div>
       </div>
+      
+
 	  
+	  	  
 	<div class="panel panel-default" Style= "height: 100%">
 	  <div id="map-test" class="panel-body">
 	  </div>
@@ -237,89 +240,130 @@
 
 		<!--Maps API-->
 	<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
+      src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true_or_false">
     </script>
 	
 	<!--Funktionen-->
 	<script>
 	  //google.maps.visualRefresh = true;
-	  var map; 
-	  var geocoder;
+	var map;
+	var autocomplete;
+	var countryRestrict = { 'country': 'de' }; 
+	var places;
+	var geocoder;
+	var DBConnector;
 	  
-      function initialize() {
+	function initialize() {
 		geocoder = new google.maps.Geocoder();
 		
 		var mapOptions = {
-		zoom: 15
-	  }
-	  // Try HTML5 geolocation
-	  if(navigator.geolocation) {
+		zoom: 16
+	   	};
+		map = new google.maps.Map(document.getElementById('map-test'), mapOptions);
+	   // Try HTML5 geolocation
+	   if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 			var infowindow = new google.maps.InfoWindow({
-			map: map,
-			position: pos,
-			content: 'Dein aktueller Standpunkt.'
+				map: map,
+				position: pos,
+				//content: 'Dein aktueller Standpunkt.'
+				content: 'Location found using HTML5.'
 			});
 			map.setCenter(pos);
-			}, function() {
-			handleNoGeolocation(true);
-			});
-		} else {
-    // Browser doesn't support Geolocation
+		}, function() {
+				handleNoGeolocation(true);
+		});
+	} else {
+    	// Browser doesn't support Geolocation
 		handleNoGeolocation(false);
-	   }
-	  map = new google.maps.Map(document.getElementById('map-test'), mapOptions);	   
-	  }
+	}
+		autocomplete = new google.maps.places.Autocomplete(
+			/** @type {HTMLInputElement} */
+			(document.getElementById('address')),{
+			//types: ['(cities)'],
+			componentRestrictions: countryRestrict
+		});
+			places = new google.maps.places.PlacesService(map);
+			google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);  
+	}
+	
+	function onPlaceChanged() {
+		var place = autocomplete.getPlace();
+		if (place.geometry) {
+			map.panTo(place.geometry.location);
+			map.setZoom(16);
+			search();
+		} else {
+			document.getElementById('address');
+		}
+	}
       
-      function toggleBounce() {
-
-    	  if (marker.getAnimation() != null) {
+    function toggleBounce() {
+    	if (marker.getAnimation() != null) {
     	    marker.setAnimation(null);
-    	  } else {
+    	} else {
     	    marker.setAnimation(google.maps.Animation.BOUNCE);
+    	}
+   	}
+
+    function sucheAusfuehren(){
+    	codeAddress();
+    	tankstellenTabelleLaden();
+    }
+      
+    function tankstellenTabelleLaden(){
+    <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
+    
+    document.onkeydown = function(event) {
+    	  if (event.keyCode == 13) {
+    		  <% 
+    		    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+    		    %>
     	  }
     	}
-
-      
-	  	function codeAddress() {
+    
+    
+    }
+    
+	function codeAddress() {
 		var address = document.getElementById('address').value;
 		geocoder.geocode( { 'address': address}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			map.setCenter(results[0].geometry.location);
-		var marker = new google.maps.Marker({
-			   animation: google.maps.Animation.DROP,	
-		map: map,
-		position: results[0].geometry.location
-		});
-		  google.maps.event.addListener(marker, 'click', toggleBounce);
-
-		} else {
-		  alert('Geocode was not successful for the following reason: ' + status);
-		  }
-		});
-		}
-		function handleNoGeolocation(errorFlag) {
-			if (errorFlag) {
-				var content = 'Error: The Geolocation service failed.';
-			} else {
-				var content = 'Error: Your browser doesn\'t support geolocation.';
-			}
-			var options = {
+			if (status == google.maps.GeocoderStatus.OK) {
+				map.setCenter(results[0].geometry.location);
+				var marker = new google.maps.Marker({
+			   	animation: google.maps.Animation.DROP,	
 				map: map,
-				position: new google.maps.LatLng(60, 105),
-				content: content
-			};
-			var infowindow = new google.maps.InfoWindow(options);
-			map.setCenter(options.position);
+				position: results[0].geometry.location
+			});
+		  //google.maps.event.addListener(marker, 'click', toggleBounce);
+		  	} else {
+		  		alert('Geocode was not successful for the following reason: ' + status);
+		  	}
+		});
+	}
+	
+	
+	function handleNoGeolocation(errorFlag) {
+		if (errorFlag) {
+			var content = 'Error: The Geolocation service failed.';
+		} else {
+			var content = 'Error: Your browser doesn\'t support geolocation.';
 		}
-		google.maps.event.addDomListener(window, 'load', initialize);
-
+		
+		var options = {
+			map: map,
+			position: new google.maps.LatLng(60, 105),
+			//content: content
+		};
+		var infowindow = new google.maps.InfoWindow(options);
+		map.setCenter(options.position);
+	}
+	google.maps.event.addDomListener(window, 'load',initialize());
     </script>
 
 	
 	
-	  <!--<c:out value="${dbconnector.tankstellenList}"></c:out>-->	  
 	  <div class="table-responsive">
 	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/>
 	  <table class="table table-bordered table-hover">

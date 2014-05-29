@@ -5,10 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
  
+/*
+ * Diese Klasse dient zur Connectionaufbau der HP mit der Datenbank.
+ * Sie erstellt zudem die SQLs und gibt diese an die entsprechende Klassen weiter...
+ * */
+
 public class DBConnector
 {
-//	public static String user ="Andreas";
-	public static String user ="Marvin";
+	public static String user ="Andreas";
+//	public static String user ="Marvin";
 	
 	private static Connection con=null;
 	private String benutzer ="";
@@ -16,12 +21,15 @@ public class DBConnector
 	private String email ="";
 	private String vorname ="";
 	private String nachname ="";
+    /*Die Variablen Login und Registrierung werden über die JSP befüllt und von ihr verwendet
+     *leider bleibt diese Warning stehen*/
 	private boolean login =false;
 	private boolean registrierung =false;
 	private String ort="";
 	private String entfernung ="";
 	private String sorte="";
 	private String tankstelle="";
+	private boolean ergebnis = false;
 	private static ArrayList<ArrayList<String>> tankstellenList = new ArrayList<ArrayList<String>>();
  
 
@@ -36,18 +44,16 @@ public class DBConnector
 
 	public boolean loginCheck(String benutzerName, String passwort)
     {
-		boolean ergebnis = false;
-          
-	     ergebnis = ladenDerTreiberKlasse();
+
+		ladenDerTreiberKlasse();
   
     try
     {
       con = DriverManager.getConnection( 
     		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
 
-      //Sql zusammenbauen und ausführen
-//     testSQLAusfuehren(con);
-      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.passwort from login l where l.benutzername ='" +benutzerName+ "'");
+    //Sql zusammenbauen und ausführen
+    LoginSQL lsql= new LoginSQL(con.createStatement(),con, "Select l.passwort from login l where l.benutzername ='" +benutzerName+ "'");
   	ergebnis =  lsql.sqlAusführen(passwort);
     }
     catch ( SQLException e )
@@ -73,7 +79,7 @@ public class DBConnector
     {
 		boolean ergebnis = false;
           
-		ergebnis= ladenDerTreiberKlasse();
+		ladenDerTreiberKlasse();
 		   
   
     try
@@ -82,14 +88,8 @@ public class DBConnector
       		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
-//     testSQLAusfuehren(con);
-
-      LoginSQL lsql1= new LoginSQL(con.createStatement(),con, "select max(id) as id from login;");
-      int id= lsql1.sqlNr()+1;
-      
-      
-      LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN (ID, BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( "+id+",'"+benutzerName+"','"+passwort+"','"+nachname+"','"+vorname+"','"+eMail+"');");
-     ergebnis= lsql.sqlAusführen();
+      ergebnis = loginSQLErstellenUndAusfuehren(benutzerName, passwort, nachname,
+			vorname, eMail);
      con.commit();
 
     }
@@ -112,11 +112,25 @@ public class DBConnector
 	return ergebnis;
 
     }
+
+
+	private boolean loginSQLErstellenUndAusfuehren(String benutzerName,
+			String passwort, String nachname, String vorname, String eMail)
+			throws SQLException {
+		boolean ergebnis;
+		LoginSQL lsql1= new LoginSQL(con.createStatement(),con, "select max(id) as id from login;");
+		  int id= lsql1.sqlNr()+1;
+		  
+		  
+		  LoginSQL lsql= new LoginSQL(con.createStatement(),con, "INSERT INTO LOGIN (ID, BENUTZERNAME, PASSWORT, NACHNAME, VORNAME, EMAIL) VALUES ( "+id+",'"+benutzerName+"','"+passwort+"','"+nachname+"','"+vorname+"','"+eMail+"');");
+		 ergebnis= lsql.sqlAusführen();
+		return ergebnis;
+	}
 	
 	public static ArrayList<ArrayList<String>> sucheAlleTankstellenSQL()
     { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
-		boolean ergebnis = false;
-     ergebnis = ladenDerTreiberKlasse();
+
+    ladenDerTreiberKlasse();
  
   
     try
@@ -125,38 +139,8 @@ public class DBConnector
       		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
-      //testSQLAusfuehren(con);
-      String sql = "";
-      		 
-      		 sql += "Select t.* from tankstelle t where 1=1";
+        tankstellenList = suchenAlleTankstellenSQLErstellenUndAusfuehren();
       
-      SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
-     
-      listErgebnis=lsql.sqlAusfuehren();
-      for(ArrayList<String> l : listErgebnis){
-    	  for(String l1: l){
-    		  l1.trim();
-    	  }
-      }
-      
-      tankstellenList=listErgebnis;
-//      for(ArrayList<String> z: listErgebnis){
-//    	  for(int i = 0 i<z.length() , i++){
-//    		  t.setNr(z1);
-//    		  t.setDiesel(diesel)
-//    		  
-//    			private String name="";
-//    			private String strasse = "";
-//    			private String ort="";
-//    			private String plz="";
-//    			private String e10= "";
-//    			private String ssuper= "";
-//    			private String superplus= "";
-//    			private String diesel= "";
-//    			private String vpowerdiesel= "";
-//    	  }
-//      }
-////      t.setNr();
     }
     catch ( SQLException e )
     {
@@ -176,11 +160,28 @@ public class DBConnector
 	 return listErgebnis;
     }
 
+
+	private static ArrayList<ArrayList<String>> suchenAlleTankstellenSQLErstellenUndAusfuehren()
+			throws SQLException {
+		ArrayList<ArrayList<String>> listErgebnis;
+		String sql =  "Select t.* from tankstelle t where 1=1";
+		  
+		  SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
+		 
+		  listErgebnis=lsql.sqlAusfuehren();
+		  for(ArrayList<String> l : listErgebnis){
+			  for(String l1: l){
+				  l1.trim();
+			  }
+		  }
+		return listErgebnis;
+	}
+
 	
 	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort)
     { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
-		boolean ergebnis = false;
-     ergebnis = ladenDerTreiberKlasse();
+
+		ladenDerTreiberKlasse();
  
   
     try
@@ -189,26 +190,7 @@ public class DBConnector
       		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
-      //testSQLAusfuehren(con);
-      String sql = "";
-      		 
-      		 sql += "Select t.* from tankstelle t where 1=1 ";
-      		if(!ort.isEmpty()){
-      		sql += "and t.name like ('%" +ort+ "%') ";
-      		sql += "or t.Strasse like ('%" +ort+ "%') ";
-      		sql += "or t.ort like ('%" +ort+ "%') ";
-      		sql += "or t.plz like ('%" +ort+ "%') ";}
-      
-      SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
-     
-      listErgebnis=lsql.sqlAusfuehren();
-      for(ArrayList<String> l : listErgebnis){
-    	  for(String l1: l){
-    		  l1.trim();
-    	  }
-      }
-      tankstellenList=listErgebnis;
-//      System.out.println(listErgebnis);
+        tankstellenList = sucheEineTankstelleErstellenUndAusfuehren(ort);
      
     }
     catch ( SQLException e )
@@ -228,25 +210,46 @@ public class DBConnector
     }
 	 return listErgebnis;
     }
+
+//
+	private static ArrayList<ArrayList<String>> sucheEineTankstelleErstellenUndAusfuehren(
+			String ort) throws SQLException {
+		ArrayList<ArrayList<String>> listErgebnis;
+		String sql = "";
+		  		 
+		  		 sql += "Select t.* from tankstelle t where 1=1 ";
+		  		if(!ort.isEmpty()){
+		  		sql += "and t.name like ('%" +ort+ "%') ";
+		  		sql += "or t.Strasse like ('%" +ort+ "%') ";
+		  		sql += "or t.ort like ('%" +ort+ "%') ";
+		  		sql += "or t.plz like ('%" +ort+ "%') ";}
+		  
+		  SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
+		 
+		  listErgebnis=lsql.sqlAusfuehren();
+		  for(ArrayList<String> l : listErgebnis){
+			  for(String l1: l){
+				  l1.trim();
+			  }
+		  }
+		return listErgebnis;
+	}
 
 
 	/**
 	 * 
 	 */
-	public static boolean ladenDerTreiberKlasse() {
-		boolean erg = false;
+	public static void ladenDerTreiberKlasse() {
 		try
 		{
 		    // Treiberklasse laden
 			Class.forName("org.hsqldb.jdbcDriver");
-		  erg=true;
 		}
 		catch ( ClassNotFoundException e )
 		{
 		  System.err.println( "Treiberklasse nicht gefunden!" );
 		  
 		}
-		return erg;
 	}
 
 	
@@ -326,7 +329,7 @@ public class DBConnector
     }
     
  	public void setCon(Connection con) {
- 		this.con = con;
+ 		DBConnector.con = con;
  	}
 
 	public String getBenutzer() {
@@ -425,6 +428,7 @@ public class DBConnector
 
 	public void setOrt(String ort) {
 		this.ort = ort;
+		sucheTankstelleSQL(getOrt());
 	}
 
 
@@ -445,6 +449,7 @@ public class DBConnector
 
 	public void setSorte(String sorte) {
 		this.sorte = sorte;
+//		sucheTankstelleSQL(getOrt(), getSorte());
 	}
 
 
@@ -464,7 +469,7 @@ public class DBConnector
 
 
 	public void setTankstellenList(ArrayList<ArrayList<String>> testList) {
-		this.tankstellenList = testList;
+		DBConnector.tankstellenList = testList;
 	}
 
 

@@ -179,13 +179,15 @@
        <div class="panel panel-default">
         <div class="panel-body">
           <br>
-		  <form>
+		  <form onsubmit="retrun tankstellenTabelleLaden()">
           <div class="col-md-4">
             <input name="Ortssuche" id="address" placeholder="Ort" class="form-control" type="text">
 		  </div>
+	
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>
             <div class="row">-->
+      
               <div class="col-md-3">
                 <select name="tankstelle" class="form-control">
 				  <option default>Tankstelle</option>
@@ -195,6 +197,7 @@
                   <option>usw</option>
                 </select>
               </div>
+     
               <div class="col-md-3">
                 <select name="spritart" class="form-control">
 				  <option default>Spritart</option>
@@ -205,6 +208,8 @@
                   <option>usw</option> 
                 </select>
               </div>
+           
+          
               <div class="col-md-3">
                 <select name="entfernung" class="form-control">
 				  <option default>Entfernung</option>
@@ -214,11 +219,12 @@
                   <option>20 Km</option>
                 </select>
               </div>
+             
               <div class="col-md-1">     
-                <input class="btn btn-primary" type="button" value="Suchen" onclick="sucheAusfuehren()" onkeydown="sucheAusfuehren()">       
+                <input class="btn btn-primary" type="submit" value="Suchen" onclick="codeAddress()">       
               </div>
-			</form>
             </div>
+           </form>
           </div>
         </div>
       </div>
@@ -230,6 +236,10 @@
 	  <div id="map-test" class="panel-body">
 	  </div>
 	</div>
+	<div id="pos">
+		Meine Position wird ermittelt...
+	</div>
+	
 	  	<!--Map wird sichtbar -->
 	<!--<div class="panel panel-default">
 	  <div id="map-test" class="panel-body" >
@@ -253,40 +263,58 @@
 	var geocoder;
 	var DBConnector;
 	  
-	function initialize() {
-		geocoder = new google.maps.Geocoder();
+	function initialize(coords) {
+		var latlng = new google.maps.LatLng(coords.latitude, coords.longitude)
+		//geocoder = new google.maps.Geocoder();
 		
 		var mapOptions = {
-		zoom: 16
+		zoom: 16,
+		center: latlng
 	   	};
 		map = new google.maps.Map(document.getElementById('map-test'), mapOptions);
-	   // Try HTML5 geolocation
-	   if(navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-			var infowindow = new google.maps.InfoWindow({
-				map: map,
-				position: pos,
-				//content: 'Dein aktueller Standpunkt.'
-				content: 'Location found using HTML5.'
-			});
-			map.setCenter(pos);
-		}, function() {
-				handleNoGeolocation(true);
+		
+		var marker = new google.maps.Marker({
+			position: latlng,
+			map: map,
+			title: "Hier bist du"
 		});
-	} else {
-    	// Browser doesn't support Geolocation
-		handleNoGeolocation(false);
-	}
+		
 		autocomplete = new google.maps.places.Autocomplete(
-			/** @type {HTMLInputElement} */
-			(document.getElementById('address')),{
-			//types: ['(cities)'],
-			componentRestrictions: countryRestrict
-		});
-			places = new google.maps.places.PlacesService(map);
-			google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);  
+				/** @type {HTMLInputElement} */
+				(document.getElementById('address')),{
+				//types: ['(cities)'],
+				componentRestrictions: countryRestrict
+			});
+				places = new google.maps.places.PlacesService(map);
+				google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);
+		
 	}
+	
+	navigator.geolocation.getCurrentPosition(function(position){
+		initialize(position.coords);
+	}, function(){
+		document.getElementById('pos').innerHTML = 'Deine Position konnte leider nicht ermittelt werden';
+	});
+// 	   // Try HTML5 geolocation
+// 	   if(navigator.geolocation) {
+// 		navigator.geolocation.getCurrentPosition(function(position) {
+// 			//var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+// 			initialize(position.coords)
+// 			var infowindow = new google.maps.InfoWindow({
+// 				map: map,
+// 				position: pos,
+// 				//content: 'Dein aktueller Standpunkt.'
+// 				content: 'Location found using HTML5.'
+// 			});
+// 			map.setCenter(pos);
+// 		}, function() {
+// 				handleNoGeolocation(true);
+// 		});
+// 	} else {
+//     	// Browser doesn't support Geolocation
+// 		handleNoGeolocation(false);
+// 	}
+
 	
 	function onPlaceChanged() {
 		var place = autocomplete.getPlace();
@@ -314,19 +342,22 @@
       
     function tankstellenTabelleLaden(){
     <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
+    <% 
+    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+    %>
     
-    document.onkeydown = function(event) {
-    	  if (event.keyCode == 13) {
-    		  <% 
-    		    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
-    		    %>
-    	  }
-    	}
-    
-    
+//     document.onkeydown = function(event) {
+    	
+//     	  if (event.keyCode == 13) {
+<%--     		  <%  --%>
+//     		    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+<%--     		    %> --%>
+//     	  }
+//     	}
     }
     
 	function codeAddress() {
+		var geocoder = new google.maps.Geocoder();
 		var address = document.getElementById('address').value;
 		geocoder.geocode( { 'address': address}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
@@ -361,8 +392,6 @@
 	}
 	google.maps.event.addDomListener(window, 'load',initialize());
     </script>
-
-	
 	
 	  <div class="table-responsive">
 	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/>

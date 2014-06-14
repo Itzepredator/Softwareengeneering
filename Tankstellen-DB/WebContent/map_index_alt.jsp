@@ -8,7 +8,9 @@
     <meta charset="AddDefaultCharset utf-8">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="google-site-verification" content="AIzaSyCXxCG4kAz3fMbw-aph-Wil9JS5WrR58dQ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <link rel="shortcut icon" href="favicon.png">
 
     <title>Map_Index</title>
@@ -39,8 +41,6 @@
 	<link rel="apple-touch-icon-precomposed" Size="114x114" href="ico/apple-touch-icon-114-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" Size="72x72" href="ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
-	
-	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
   </head>
   
   
@@ -179,81 +179,47 @@
        <div class="panel panel-default">
         <div class="panel-body">
           <br>
-		  <form id= "hauptsuche" Method="GET" action="list.jsp" >		  
+		  <form id= "sucheAusfuehren" Method="POST" onsubmit="sucheAusfuehren()" action="map_index.jsp" >		  
           <div class="col-md-4">
-            <input name="searchText" id="address" type="text" value="PLZ / Ort / Koordinaten" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';" onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
-		  	<c:set var="searchText" value="${param.searchText}"/>
+            <input name="Ortssuche" id="address" placeholder="Ort" class="form-control" type="text">
 		  </div>
+	
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>
             <div class="row">-->
+      
               <div class="col-md-3">
                 <select name="tankstelle" class="form-control">
 				  <option default>Tankstelle</option>
-                  <option value="0"
-                  	<c:if test="${param.selectValueTankstelle == 0})"> selected </c:if> >
-                  	Alle
-                  </option>
-                  <option value="1"
-                  	<c:if test="${param.selectValueTankstelle == 1})"> selected </c:if> >
-                  	Argip
-                  </option>
-                  <option value="2"
-                  	<c:if test="${param.selectValueTankstelle == 2})"> selected </c:if> >
-                  	Aral
-                  </option>
-                  <option value="666"
-                  	<c:if test="${param.selectValueTankstelle == 666})"> selected </c:if> >
-                  	usw
-                  </option>
+                  <option>Alle</option>
+                  <option>Argip</option>
+                  <option>Aral</option>
+                  <option>usw</option>
                 </select>
               </div>
+     
               <div class="col-md-3">
                 <select name="spritart" class="form-control">
 				  <option default>Spritart</option>
-                  <option value="1"
-                  	<c:if test="${param.selectValueSpritart == 1})"> selected </c:if> >
-                  	Super(E5)
-                  </option>
-                  <option value="2"
-                  	<c:if test="${param.selectValueSpritart == 2})"> selected </c:if> >
-                  	Super(10)
-                  </option>
-                  <option value="3"
-                  	<c:if test="${param.selectValueSpritart == 3})"> selected </c:if> >
-                  	Diesel
-                  </option>
-                  <option value="4"
-                  	<c:if test="${param.selectValueSpritart == 4})"> selected </c:if> >
-                  	V-Power Diesel
-                  </option>
-                  <option value="666"
-                  	<c:if test="${param.selectValueSpritart == 666})"> selected </c:if> >
-                  	usw
-                  </option>
+                  <option>Super(E5)</option>
+                  <option>Super(10)</option>
+                  <option>Diesel</option>
+                  <option>V-Power Diesel</option>
+                  <option>usw</option> 
                 </select>
               </div>
+           
+          
               <div class="col-md-3">
                 <select name="entfernung" class="form-control">
 				  <option default>Entfernung</option>
-                  <option value="5"
-                  	<c:if test="${param.selectValueEntfernung == 5})"> selected </c:if> >
-                  	5 Km
-                  </option>
-                  <option value="10"
-                  	<c:if test="${param.selectValueEntfernung == 10})"> selected </c:if> >
-                  	10 Km
-                  </option>
-                  <option value="15"
-                  	<c:if test="${param.selectValueEntfernung == 15})"> selected </c:if> >
-                  	15 Km
-                  </option>
-                  <option value="20"
-                  	<c:if test="${param.selectValueEntfernung == 20})"> selected </c:if> >
-                  	20 Km
-                  </option>
+                  <option>5 Km</option>
+                  <option>10 Km</option>
+                  <option>15 Km</option>
+                  <option>20 Km</option>
                 </select>
               </div>
+             
               <div class="col-md-1">     
                 <button class="btn btn-primary" type="submit">
                 	Suchen
@@ -263,7 +229,7 @@
            </form>
           </div>
         </div>
-   
+      </div>
       
 
 	  
@@ -286,245 +252,52 @@
 
 		<!--Maps API-->
 	<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?sensor=false">
+      src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true_or_false">
     </script>
 	
 	<!--Funktionen-->
-	<script type="text/javascript">
+	<script>
 	  //google.maps.visualRefresh = true;
-	//var map;
+	var map;
 	var autocomplete;
 	var countryRestrict = { 'country': 'de' }; 
 	var places;
 	var DBConnector;		
-	var sec = "";
 	  
-	
-	var searchText = "<c:out value="${param.searchText}"/>";
-	console.log(document.getElementById('address').value);
-	var typeOfSearch = "city";
-	
-	if(sec == 'list' && typeOfSearch != 'coord') {
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({
-			address: 'Deutschland ' + searchText
-			}, function(locResult) {
-				lat = locResult[0].geometry.location.lat();
-	            lon = locResult[0].geometry.location.lng();
-			});
-	} else {
-        var lat = 49.798456;
-        var lon = 9.942688;
-        }
-	
-	function initialize() {		
+	function initialize(coords) {
+
+		var latlng = new google.maps.LatLng(coords.latitude, coords.longitude)
+		//geocoder = new google.maps.Geocoder();
+		
 		var mapOptions = {
-		center: new google.maps.LatLng(lat, lon),
-		zoom: 14,
-		mapTypeId: google.maps.MapTypeId.ROADMAP,
-		streetViewControl: false,
-		mapTypeControl: false,
-		overviewMapControl: false
-		//disableDefaultUI: true,
+		zoom: 16,
+		disableDefaultUI: true,
+		center: latlng
 	   	};
 		map = new google.maps.Map(document.getElementById('map-test'), mapOptions);
-	
-	}
-	
-	function moveMap(moveLat, moveLon) {
-		var moveLatLng  = new google.maps.LatLng(moveLat, moveLon);
+		
 		var marker = new google.maps.Marker({
-			position: moveLatLng,
+			position: latlng,
 			map: map,
 			title: "Hier bist du"
 		});
-		map.panTo(moveLatLng);
-	}
-	
-	function usePosition(position) {
-		document.getElementById('address').value = position.coords.latitude + ',' + position.coords.longitude;
-		moveMap(position.coords.latitude, position.coords.longitude);
-	}
-	//TODO JSON
-// 	function addListMarker() {
-// 		$.getJSON("WEB-INF/resources/json/rostock_tankstellen_test.txt", function(data) {
-// 			var items[];
-// 			$.each(data.stations, function(station, val) {
-// 				var setIcon = 'WEB-INF/resources/picture/gas_Station.png';
-// 				var setLatLng = new google.maps.LatLng(val.lat, val.lon);
-// 				marker = new google.maps.Marker({
-// 					position: setLatLng,
-// 					map: map,
-// 					icon: setIcon
-// 				});
-// 				google.maps.event.addListener(marker, 'click', function() {
-// 					window.location.href = '#';
-// 				});
-// 			});
-// 		});
-// 	}
-	
-//  	function addListMarker() {
 		
-// 		$.getJSON("/&result=json", function(results){
-// 			$.each(data.stations, function(station, val){
-// 					var latLng=new google.maps.LatLng(val.lat, val.lon);
-// 					var marker=new google.maps.Marker({
-// 						position: latLng,
-// 						map: map
-// 					});
-// 			});
-// 		});
-// 	}
- 	
- 	function addListMarker() {
- 		
- 	    var locations = [
-					{	"id":"9272",
-						"web_id":"79872438",
-						"name":"AVIA",
-						"address":"An Der Stadtautobahn 38",
-						"zip":"18107",
-						"city":"Rostock",
-						"lat":"54.1317885",
-						"lon":"12.0635988",
-						"mts_brand":"AVIA"
-					},
-						
-					{	"id":"10835",
-						"web_id":"1ab12a53",
-						"name":"Aral",
-						"address":"An Der Stadtautobahn 60",
-						"zip":"18119",
-						"city":"Rostock",
-						"lat":"54.16825",
-						"lon":"12.07995",
-						"mts_brand":"ARAL"
-					},
-					
-					{	"id":"10929",
-						"web_id":"51bd2ab1",
-						"name":"Aral",
-						"address":"Toitenwinkler Allee 1",
-						"zip":"18147",
-						"city":"Rostock",
-						"lat":"54.11383",
-						"lon":"12.16077",
-						"mts_brand":"ARAL"
-					},
-					{	"id":"11242",
-						"web_id":"bfba2bea",
-						"name":"Aral",
-						"address":"Tessiner Stra\u00dfe 68",
-						"zip":"18055",
-						"city":"Rostock",
-						"lat":"54.0810616",
-						"lon":"12.1943837",
-						"mts_brand":"ARAL"
-					},
-					
-					{	"id":"11723",
-						"web_id":"eb3e2dcb",
-						"name":"Aral",
-						"address":"R\u00f6versh\u00e4ger Chaussee 1",
-						"zip":"18146",
-						"city":"Rostock",
-						"lat":"54.09931",
-						"lon":"12.17473",
-						"mts_brand":"ARAL"
-					},
-					
-					{	"id":"13382",
-						"web_id":"783c3446",
-						"name":"Star",
-						"address":"Hinrichsdorfer Strasse 7E",
-						"zip":"18146",
-						"city":"Rostock",
-						"lat":"54.1109933",
-						"lon":"12.1645474",
-						"mts_brand":"STAR"
-					},
-					{"id":"16350","web_id":"fbc13fde","name":"Shell","address":"Sankt-Petersburger Str. ","zip":"18107","city":"Rostock","lat":"54.130546","lon":"12.057902","mts_brand":"Shell"},{"id":"16973","web_id":"e28b424d","name":"TOTAL","address":"Warnowufer 53","zip":"18057","city":"Rostock","lat":"54.09332","lon":"12.11552","mts_brand":"Total"},{"id":"17430","web_id":"3f344416","name":"TOTAL","address":"Erich-Schlesinger-Str. 26","zip":"18059","city":"Rostock","lat":"54.07666","lon":"12.11905","mts_brand":"Total"},{"id":"17433","web_id":"ccd54419","name":"Sonstige","address":"R\u00f6versh\u00e4ger Chaussee 5","zip":"18146","city":"Rostock","lat":"54.10005","lon":"12.18156","mts_brand":"team"},{"id":"18023","web_id":"a18a4667","name":"TOTAL","address":"An Der Stadtautobahn 70","zip":"18107","city":"Rostock-Luettenklein","lat":"54.1320386","lon":"12.0631525","mts_brand":"Total"},{"id":"19085","web_id":"0c9d4a8d","name":"Sonstige","address":"Handwerkstra\u00dfe 1 ","zip":"18069","city":"Rostock","lat":"54.12559","lon":"12.07709","mts_brand":"CITTI"},{"id":"19647","web_id":"007c4cbf","name":"Q1","address":"Fischerweg 1","zip":"18069","city":"Rostock","lat":"54.1137","lon":"12.08059","mts_brand":"Q1"},{"id":"19665","web_id":"d78d4cd1","name":"ESSO","address":"Werftallee  ","zip":"18109","city":"Rostock","lat":"54.157248","lon":"12.078678","mts_brand":"ESSO"},{"id":"19902","web_id":"ed624dbe","name":"Star","address":"Gro\u00dfe Rampe 1","zip":"18146","city":"Rostock","lat":"54.13945","lon":"12.16683","mts_brand":"STAR"},{"id":"21451","web_id":"99f953cb","name":"ESSO","address":"Lise-Meitner-Ring 1  ","zip":"18059","city":"Rostock","lat":"54.05956","lon":"12.11783","mts_brand":"ESSO"},{"id":"21722","web_id":"eb9654da","name":"Shell","address":"Lorenzstr. 75 ","zip":"18146","city":"Rostock","lat":"54.10961","lon":"12.16789","mts_brand":"Shell"},{"id":"28679","web_id":"be3e7007","name":"ESSO","address":"Rostocker Str. 52  ","zip":"18069","city":"Rostock","lat":"54.106062","lon":"12.047943","mts_brand":"ESSO"},{"id":"28718","web_id":"6406702e","name":"Sonstige","address":"Roevershaeger Ch. 3","zip":"18146","city":"Rostock","lat":"54.09951","lon":"12.17716","mts_brand":"Tankcenter"},{"id":"29990","web_id":"bffe7526","name":"TOTAL","address":"Tessiner Str. 98","zip":"18055","city":"Rostock","lat":"54.08061","lon":"12.18906","mts_brand":"Total"},{"id":"31149","web_id":"a57a79ad","name":"ESSO","address":"Verbindungsweg  ","zip":"18055","city":"Rostock","lat":"54.0829098","lon":"12.1645775","mts_brand":"ESSO"},{"id":"33770","web_id":"d2c283ea","name":"Sonstige","address":"Hansestr. 47 ","zip":"18182","city":"Rostock-Bentwisch","lat":"54.11366","lon":"12.19276","mts_brand":"Supermarkt-Tankstelle"},{"id":"33947","web_id":"4361849b","name":"HEM","address":"Zum S\u00fcdtor 6","zip":"18147","city":"Rostock","lat":"54.1369547","lon":"12.1118795","mts_brand":"HEM"},{"id":"34594","web_id":"bcda8722","name":"JET","address":"Satower Str. 10A ","zip":"18059","city":"Rostock","lat":"54.0753617","lon":"12.09267","mts_brand":"JET"},{"id":"46584","web_id":"dd65b5f8","name":"Agip","address":"Schmarler Damm 9","zip":"18069","city":"Rostock","lat":"54.129373","lon":"12.0753222","mts_brand":"Agip"},{"id":"54001","web_id":"3560d2f1","name":"JET","address":"Werftstr. 45 ","zip":"18057","city":"Rostock","lat":"54.094965","lon":"12.1026204","mts_brand":"JET"},{"id":"59362","web_id":"0e09e7e2","name":"AVIA","address":"Am Liepengraben 18 18","zip":"18147","city":"Rostock","lat":"54.128434","lon":"12.1613073","mts_brand":"AVIA"},{"id":"85423","web_id":"835b14daf","name":"HEM","address":"Ost-West-Str. 13","zip":"18147","city":"Rostock","lat":"54.14565","lon":"12.115951","mts_brand":"HEM"},{"id":"85447","web_id":"d3e514dc7","name":"Sonstige","address":"Gielandstr. 2","zip":"18147","city":"Rostock","lat":"54.1261","lon":"12.1628","mts_brand":"Tankstelle"},{"id":"85485","web_id":"c7e414ded","name":"Sonstige","address":"Hansestr. 20-22","zip":"18182","city":"Rostock-Bentwisch","lat":"54.1274","lon":"12.1766","mts_brand":"team"}
- 	    ];
- 		
- 		//var lat = 54.1317885;
- 		//var lon = 12.0635988;
- 		
-//  		var setLatLng = new google.maps.LatLng(lat, lon);
-//  		var marker = new google.maps.Marker({
-//  			position: setLatLng,
-//  			map: map
-//  		});
-			var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
-			for(var i=0; i<locations.length; i++) {
-				var marker = new google.maps.Marker({
-					position: new google.maps.LatLng(locations[i].lat, locations[i].lon),
-					title: locations[i].mts_brand,
-					icon: setIcon,
-					map: map
-				});
-		 		google.maps.event.addListener(marker, 'click', function() {
-		 			window.location.href='#';
-		 		});
-			}
- 	}
+		autocomplete = new google.maps.places.Autocomplete(
+				/** @type {HTMLInputElement} */
+				(document.getElementById('address')),{
+				//types: ['(cities)'],
+				componentRestrictions: countryRestrict
+			});
+				places = new google.maps.places.PlacesService(map);
+				google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);
 
-// 	function addListMarker() {
-// 		var xml = new XMLHttpRequest();
-		
-// 		window.onload = function() {
-// 			xml.open("GET", "http://localhost:8080/Tankstellen-DB/rostock_tankstellen_test.json", true);
-// 			xml.send(null);
-			
-// 			document.write(xml.response.Text);
-// 		}
-// 	}
-
-
-	
-	
-	if(sec == '') {
-		var watchId = navigator.geolocation.getCurrentPosition(usePosition);
-// 		navigator.geolocation.getCurrentPosition(function(position){
-//			initialize(position.coords);
-//			});
 	}
-	
-    if(sec == '' || sec == 'list' || sec == 'detail') {
-        google.maps.event.addDomListener(window, 'load', initialize);
-      }
-    
-    if(sec == 'detail') {
-    	google.maps.event.addDomListener(window, 'load', addDetailMarker);
-    }
-    
-    if(sec == 'list') {
-    	google.maps.event.addDomListener(window, 'load', addListMarker);
-    }
-	
-    //google.maps.event.addDomListener(window, 'load', initialize);
-	
-	
-		//Autokompletioin
-// 		autocomplete = new google.maps.places.Autocomplete(
-// 				/** @type {HTMLInputElement} */
-// 				(document.getElementById('address')),{
-// 				//types: ['(cities)'],
-// 				componentRestrictions: countryRestrict
-// 			});
-// 				places = new google.maps.places.PlacesService(map);
-// 				google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);
-
-
-
-
-
 		//navigator hat problem. wenn in initialize dann dauerhafte frage ob Standort ermittelt werden soll
-// 		navigator.geolocation.getCurrentPosition(function(position){
-// 			initialize(position.coords);
-// 		}, function(){
-// 			document.getElementById('pos').innerHTML = 'Deine Position konnte leider nicht ermittelt werden';
-// 		});
+		navigator.geolocation.getCurrentPosition(function(position){
+			initialize(position.coords);
+		}, function(){
+			document.getElementById('pos').innerHTML = 'Deine Position konnte leider nicht ermittelt werden';
+		});
 		
 
 
@@ -550,29 +323,29 @@
 // 	}
 
 	
-// 	function onPlaceChanged() {
-// 		var place = autocomplete.getPlace();
-// 		if (place.geometry) {
-// 			map.panTo(place.geometry.location);
-// 			map.setZoom(16);
-// 			//search();
-// 		} else {
-// 			document.getElementById('address');
-// 		}
-// 	}
+	function onPlaceChanged() {
+		var place = autocomplete.getPlace();
+		if (place.geometry) {
+			map.panTo(place.geometry.location);
+			map.setZoom(16);
+			//search();
+		} else {
+			document.getElementById('address');
+		}
+	}
       
-//     function toggleBounce() {
-//     	if (marker.getAnimation() != null) {
-//     	    marker.setAnimation(null);
-//     	} else {
-//     	    marker.setAnimation(google.maps.Animation.BOUNCE);
-//     	}
-//    	}
+    function toggleBounce() {
+    	if (marker.getAnimation() != null) {
+    	    marker.setAnimation(null);
+    	} else {
+    	    marker.setAnimation(google.maps.Animation.BOUNCE);
+    	}
+   	}
 
-//     function sucheAusfuehren(){
-//     	codeAddress();
-//     	tankstellenTabelleLaden();
-//     }
+    function sucheAusfuehren(){
+    	codeAddress();
+    	tankstellenTabelleLaden();
+    }
       
     function tankstellenTabelleLaden(){
     <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
@@ -616,19 +389,9 @@
 // 		var infowindow = new google.maps.InfoWindow(options);
 // 		map.setCenter(options.position);
 // 	}
-//		google.maps.event.addDomListener(window, 'load', initialize);
+		google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-   
-    	<script type="text/javascript" src="rostock_tankstellen_test.json">
-    	$(document).ready(function(e) {
-    	
-    	});
-    
-    	function jsonCallback(jsonObject) {
-    		alert(jsonObject.start.count);
-    	}
-    	</script>
 	
 	  <div class="table-responsive">
 	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/>

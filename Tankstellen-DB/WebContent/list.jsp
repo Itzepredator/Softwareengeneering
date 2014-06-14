@@ -179,81 +179,42 @@
        <div class="panel panel-default">
         <div class="panel-body">
           <br>
-		  <form id= "hauptsuche" Method="GET" action="list.jsp" >		  
+		  <form id="hauptsuche" Method="GET" action="list.jsp">		  
           <div class="col-md-4">
-            <input name="searchText" id="address" type="text" value="PLZ / Ort / Koordinaten" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';" onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
+            <input name="searchText" id="address" type="text" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';" onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
 		  	<c:set var="searchText" value="${param.searchText}"/>
 		  </div>
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>
-            <div class="row">-->
+            <div class="row">-->     
               <div class="col-md-3">
                 <select name="tankstelle" class="form-control">
 				  <option default>Tankstelle</option>
-                  <option value="0"
-                  	<c:if test="${param.selectValueTankstelle == 0})"> selected </c:if> >
-                  	Alle
-                  </option>
-                  <option value="1"
-                  	<c:if test="${param.selectValueTankstelle == 1})"> selected </c:if> >
-                  	Argip
-                  </option>
-                  <option value="2"
-                  	<c:if test="${param.selectValueTankstelle == 2})"> selected </c:if> >
-                  	Aral
-                  </option>
-                  <option value="666"
-                  	<c:if test="${param.selectValueTankstelle == 666})"> selected </c:if> >
-                  	usw
-                  </option>
+                  <option value="0">Alle</option>
+                  <option value="1">Argip</option>
+                  <option value="2">Aral</option>
+                  <option value="n">usw</option>
                 </select>
-              </div>
+              </div>   
               <div class="col-md-3">
                 <select name="spritart" class="form-control">
 				  <option default>Spritart</option>
-                  <option value="1"
-                  	<c:if test="${param.selectValueSpritart == 1})"> selected </c:if> >
-                  	Super(E5)
-                  </option>
-                  <option value="2"
-                  	<c:if test="${param.selectValueSpritart == 2})"> selected </c:if> >
-                  	Super(10)
-                  </option>
-                  <option value="3"
-                  	<c:if test="${param.selectValueSpritart == 3})"> selected </c:if> >
-                  	Diesel
-                  </option>
-                  <option value="4"
-                  	<c:if test="${param.selectValueSpritart == 4})"> selected </c:if> >
-                  	V-Power Diesel
-                  </option>
-                  <option value="666"
-                  	<c:if test="${param.selectValueSpritart == 666})"> selected </c:if> >
-                  	usw
-                  </option>
+                  <option value="1">Super(E5)</option>
+                  <option value="2">Super(10)</option>
+                  <option value="3">Diesel</option>
+                  <option value="4">V-Power Diesel</option>
+                  <option value="n">usw</option> 
                 </select>
-              </div>
+              </div>                    
               <div class="col-md-3">
                 <select name="entfernung" class="form-control">
 				  <option default>Entfernung</option>
-                  <option value="5"
-                  	<c:if test="${param.selectValueEntfernung == 5})"> selected </c:if> >
-                  	5 Km
-                  </option>
-                  <option value="10"
-                  	<c:if test="${param.selectValueEntfernung == 10})"> selected </c:if> >
-                  	10 Km
-                  </option>
-                  <option value="15"
-                  	<c:if test="${param.selectValueEntfernung == 15})"> selected </c:if> >
-                  	15 Km
-                  </option>
-                  <option value="20"
-                  	<c:if test="${param.selectValueEntfernung == 20})"> selected </c:if> >
-                  	20 Km
-                  </option>
+                  <option value="5">5 Km</option>
+                  <option value="10">10 Km</option>
+                  <option value="15">15 Km</option>
+                  <option value="20">20 Km</option>
                 </select>
-              </div>
+              </div>   
               <div class="col-md-1">     
                 <button class="btn btn-primary" type="submit">
                 	Suchen
@@ -263,7 +224,6 @@
            </form>
           </div>
         </div>
-   
       
 
 	  
@@ -284,24 +244,23 @@
 	
 	<!--<div id="map-test"/> -->
 
+
 		<!--Maps API-->
 	<script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?sensor=false">
     </script>
 	
 	<!--Funktionen-->
-	<script type="text/javascript">
-	  //google.maps.visualRefresh = true;
-	//var map;
+	<script>
+
 	var autocomplete;
 	var countryRestrict = { 'country': 'de' }; 
 	var places;
 	var DBConnector;		
-	var sec = "";
+	var sec = "list";
 	  
 	
 	var searchText = "<c:out value="${param.searchText}"/>";
-	console.log(document.getElementById('address').value);
 	var typeOfSearch = "city";
 	
 	if(sec == 'list' && typeOfSearch != 'coord') {
@@ -328,7 +287,13 @@
 		//disableDefaultUI: true,
 	   	};
 		map = new google.maps.Map(document.getElementById('map-test'), mapOptions);
-	
+		
+		// Create a script tag and set the USGS URL as the source.
+// 		  var script = document.createElement('script');
+// 		  script.src = 'WebContent/WEB-INF/resources/json/rostock_tankstellen_test.txt';
+// 		  var s = document.getElementsByTagName('script')[0];
+// 		  s.parentNode.insertBefore(script, s);
+
 	}
 	
 	function moveMap(moveLat, moveLon) {
@@ -347,7 +312,7 @@
 	}
 	//TODO JSON
 // 	function addListMarker() {
-// 		$.getJSON("WEB-INF/resources/json/rostock_tankstellen_test.txt", function(data) {
+// 		$.getJSON("&result=json", function(data) {
 // 			var items[];
 // 			$.each(data.stations, function(station, val) {
 // 				var setIcon = 'WEB-INF/resources/picture/gas_Station.png';
@@ -364,8 +329,7 @@
 // 		});
 // 	}
 	
-//  	function addListMarker() {
-		
+// 	function addListMarker() {
 // 		$.getJSON("/&result=json", function(results){
 // 			$.each(data.stations, function(station, val){
 // 					var latLng=new google.maps.LatLng(val.lat, val.lon);
@@ -376,7 +340,7 @@
 // 			});
 // 		});
 // 	}
- 	
+	
  	function addListMarker() {
  		
  	    var locations = [
@@ -456,16 +420,31 @@
 //  			map: map
 //  		});
 			var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
+	
+			
+			var array =[];
+			
+		
 			for(var i=0; i<locations.length; i++) {
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(locations[i].lat, locations[i].lon),
 					title: locations[i].mts_brand,
 					icon: setIcon,
-					map: map
+					map: map,
+					id: locations[i].web_id
+					
 				});
-		 		google.maps.event.addListener(marker, 'click', function() {
-		 			window.location.href='#';
-		 		});
+				
+				array.push(marker);
+			}
+			for(var k=0; k<array.length; k++) {
+	
+				new google.maps.event.addListener(array[k], 'click', function() {
+					
+		 			window.location.href='#'+this.id;
+		 			console.log(test);
+					
+		 		});	 		
 			}
  	}
 
@@ -473,15 +452,13 @@
 // 		var xml = new XMLHttpRequest();
 		
 // 		window.onload = function() {
-// 			xml.open("GET", "http://localhost:8080/Tankstellen-DB/rostock_tankstellen_test.json", true);
+// 			xml.open("GET", "http://localhost:8080/Tankstellen-DB/rostock_tankstellen_test.json", false);
 // 			xml.send(null);
 			
 // 			document.write(xml.response.Text);
 // 		}
 // 	}
 
-
-	
 	
 	if(sec == '') {
 		var watchId = navigator.geolocation.getCurrentPosition(usePosition);
@@ -501,6 +478,7 @@
     if(sec == 'list') {
     	google.maps.event.addDomListener(window, 'load', addListMarker);
     }
+	
 	
     //google.maps.event.addDomListener(window, 'load', initialize);
 	
@@ -619,16 +597,6 @@
 //		google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-   
-    	<script type="text/javascript" src="rostock_tankstellen_test.json">
-    	$(document).ready(function(e) {
-    	
-    	});
-    
-    	function jsonCallback(jsonObject) {
-    		alert(jsonObject.start.count);
-    	}
-    	</script>
 	
 	  <div class="table-responsive">
 	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/>

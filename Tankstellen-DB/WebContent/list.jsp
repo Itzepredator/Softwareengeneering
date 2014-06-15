@@ -233,7 +233,7 @@
 	  </div>
 	</div>
 	<div id="pos">
-		Meine Position wird ermittelt...
+		<!-- Meine Position wird ermittelt... -->
 	</div>
 	
 	  	<!--Map wird sichtbar -->
@@ -556,27 +556,28 @@
     <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
     <% 
     DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+
     %>
 
     }
     
-	function codeAddress() {
-		var geocoder = new google.maps.Geocoder();
-		var address = document.getElementById('address').value;
-		geocoder.geocode( { 'address': address}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				map.setCenter(results[0].geometry.location);
-				var marker = new google.maps.Marker({
-			   		animation: google.maps.Animation.DROP,	
-					map: map,
-					position: results[0].geometry.location
-				});
-		  //google.maps.event.addListener(marker, 'click', toggleBounce);
-		  	} else {
-		  		alert('Geocode was not successful for the following reason: ' + status);
-		  	}
-		});
-	}
+// 	function codeAddress() {
+// 		var geocoder = new google.maps.Geocoder();
+// 		var address = document.getElementById('address').value;
+// 		geocoder.geocode( { 'address': address}, function(results, status) {
+// 			if (status == google.maps.GeocoderStatus.OK) {
+// 				map.setCenter(results[0].geometry.location);
+// 				var marker = new google.maps.Marker({
+// 			   		animation: google.maps.Animation.DROP,	
+// 					map: map,
+// 					position: results[0].geometry.location
+// 				});
+// 		  //google.maps.event.addListener(marker, 'click', toggleBounce);
+// 		  	} else {
+// 		  		alert('Geocode was not successful for the following reason: ' + status);
+// 		  	}
+// 		});
+// 	}
 	
 	
 // 	function handleNoGeolocation(errorFlag) {
@@ -626,7 +627,7 @@
 	 </div>
       <hr>
       <footer>
-        <p>&copy; Smoking Brains 2013</p>
+        <p>&copy; Smoking Brains 2013 - 2014</p>
       </footer>
 
 

@@ -181,7 +181,7 @@
           <br>
 		  <form id= "hauptsuche" Method="GET" action="list.jsp" >		  
           <div class="col-md-4">
-            <input name="searchText" id="address" type="text" value="PLZ / Ort / Koordinaten" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';" onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
+            <input name="searchText" id="address" type="text" value="PLZ / Ort / Koordinaten" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';"  onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
 		  	<c:set var="searchText" value="${param.searchText}"/>
 		  </div>
           <div class="pull-right col-md-8 col-md-pull">
@@ -273,7 +273,7 @@
 	  </div>
 	</div>
 	<div id="pos">
-		Meine Position wird ermittelt...
+		<!-- Meine Position wird ermittelt... -->
 	</div>
 	
 	  	<!--Map wird sichtbar -->
@@ -293,9 +293,9 @@
 	<script type="text/javascript">
 	  //google.maps.visualRefresh = true;
 	//var map;
-	var autocomplete;
+	//var autocomplete;
 	var countryRestrict = { 'country': 'de' }; 
-	var places;
+	//var places;
 	var DBConnector;		
 	var sec = "";
 	  
@@ -574,31 +574,31 @@
 //     	tankstellenTabelleLaden();
 //     }
       
-    function tankstellenTabelleLaden(){
-    <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
-    <% 
-    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
-    %>
+//     function tankstellenTabelleLaden(){
+//     <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
+<%--     <%  --%>
+//     DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+<%--     %> --%>
 
-    }
+//     }
     
-	function codeAddress() {
-		var geocoder = new google.maps.Geocoder();
-		var address = document.getElementById('address').value;
-		geocoder.geocode( { 'address': address}, function(results, status) {
-			if (status == google.maps.GeocoderStatus.OK) {
-				map.setCenter(results[0].geometry.location);
-				var marker = new google.maps.Marker({
-			   		animation: google.maps.Animation.DROP,	
-					map: map,
-					position: results[0].geometry.location
-				});
-		  //google.maps.event.addListener(marker, 'click', toggleBounce);
-		  	} else {
-		  		alert('Geocode was not successful for the following reason: ' + status);
-		  	}
-		});
-	}
+// 	function codeAddress() {
+// 		var geocoder = new google.maps.Geocoder();
+// 		var address = document.getElementById('address').value;
+// 		geocoder.geocode( { 'address': address}, function(results, status) {
+// 			if (status == google.maps.GeocoderStatus.OK) {
+// 				map.setCenter(results[0].geometry.location);
+// 				var marker = new google.maps.Marker({
+// 			   		animation: google.maps.Animation.DROP,	
+// 					map: map,
+// 					position: results[0].geometry.location
+// 				});
+// 		  //google.maps.event.addListener(marker, 'click', toggleBounce);
+// 		  	} else {
+// 		  		alert('Geocode was not successful for the following reason: ' + status);
+// 		  	}
+// 		});
+// 	}
 	
 	
 // 	function handleNoGeolocation(errorFlag) {
@@ -620,45 +620,36 @@
 
     </script>
    
-    	<script type="text/javascript" src="rostock_tankstellen_test.json">
-    	$(document).ready(function(e) {
-    	
-    	});
-    
-    	function jsonCallback(jsonObject) {
-    		alert(jsonObject.start.count);
-    	}
-    	</script>
 	
-	  <div class="table-responsive">
-	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/>
-	  <table class="table table-bordered table-hover">
-	  <tr>
-	  	<td><b>Nr</b></td>
-	  	<td><b>Name</b></td>
-	  	<td><b>Straße</b></td>
-	  	<td><b>Ort</b></td>
-	  	<td><b>PLZ</b></td>
-	  	<td><b>E10</b></td>
-	  	<td><b>Super</b></td>
-	  	<td><b>SuperPlus</b></td>
-	  	<td><b>Diesel</b></td>
-	  	<td><b>VPowerDiesel</b></td>
-	  </tr>
-	  <c:forEach items="${tankstellenList}" var="zeile">
-	  <tr>
-	  	<c:forEach  items ="${zeile}" var="spaltenInhalt">
-	  	  <td>
-	  		  <c:out value="${spaltenInhalt}"/>
-	  	</td>
-	  	</c:forEach>
-	  </tr>   
-    </c:forEach>
-	 </table>
-	 </div>
+<!-- 	  <div class="table-responsive"> -->
+<%-- 	  <c:set var="tankstellenList" value="${dbconnector.tankstellenList}"/> --%>
+<!-- 	  <table class="table table-bordered table-hover"> -->
+<!-- 	  <tr> -->
+<!-- 	  	<td><b>Nr</b></td> -->
+<!-- 	  	<td><b>Name</b></td> -->
+<!-- 	  	<td><b>Straße</b></td> -->
+<!-- 	  	<td><b>Ort</b></td> -->
+<!-- 	  	<td><b>PLZ</b></td> -->
+<!-- 	  	<td><b>E10</b></td> -->
+<!-- 	  	<td><b>Super</b></td> -->
+<!-- 	  	<td><b>SuperPlus</b></td> -->
+<!-- 	  	<td><b>Diesel</b></td> -->
+<!-- 	  	<td><b>VPowerDiesel</b></td> -->
+<!-- 	  </tr> -->
+<%-- 	  <c:forEach items="${tankstellenList}" var="zeile"> --%>
+<!-- 	  <tr> -->
+<%-- 	  	<c:forEach  items ="${zeile}" var="spaltenInhalt"> --%>
+<!-- 	  	  <td> -->
+<%-- 	  		  <c:out value="${spaltenInhalt}"/> --%>
+<!-- 	  	</td> -->
+<%-- 	  	</c:forEach> --%>
+<!-- 	  </tr>    -->
+<%--     </c:forEach> --%>
+<!-- 	 </table> -->
+<!-- 	 </div> -->
       <hr>
       <footer>
-        <p>&copy; Smoking Brains 2013</p>
+        <p>&copy; Smoking Brains 2013 - 2014</p>
       </footer>
 
 

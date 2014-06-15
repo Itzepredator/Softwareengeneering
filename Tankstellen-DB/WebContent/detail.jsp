@@ -179,49 +179,7 @@
        <div class="panel panel-default">
         <div class="panel-body">
           <br>
-		  <form id="hauptsuche" Method="GET" action="deteil.jsp">		  
-          <div class="col-md-4">
-            <input name="searchText" id="address" type="text" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';" onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
-		  	<c:set var="searchText" value="${param.searchText}"/>
-		  </div>
-          <div class="pull-right col-md-8 col-md-pull">
-            <!--<div class="row"></div>
-            <div class="row">-->     
-              <div class="col-md-3">
-                <select name="tankstelle" class="form-control">
-				  <option default>Tankstelle</option>
-                  <option value="0">Alle</option>
-                  <option value="1">Argip</option>
-                  <option value="2">Aral</option>
-                  <option value="n">usw</option>
-                </select>
-              </div>   
-              <div class="col-md-3">
-                <select name="spritart" class="form-control">
-				  <option default>Spritart</option>
-                  <option value="1">Super(E5)</option>
-                  <option value="2">Super(10)</option>
-                  <option value="3">Diesel</option>
-                  <option value="4">V-Power Diesel</option>
-                  <option value="n">usw</option> 
-                </select>
-              </div>                    
-              <div class="col-md-3">
-                <select name="entfernung" class="form-control">
-				  <option default>Entfernung</option>
-                  <option value="5">5 Km</option>
-                  <option value="10">10 Km</option>
-                  <option value="15">15 Km</option>
-                  <option value="20">20 Km</option>
-                </select>
-              </div>   
-              <div class="col-md-1">     
-                <button class="btn btn-primary" type="submit">
-                	Suchen
-                </button>       
-              </div>
-            </div>
-           </form>
+		  
           </div>
         </div>
       
@@ -233,7 +191,7 @@
 	  </div>
 	</div>
 	<div id="pos">
-		Meine Position wird ermittelt...
+		<!-- Meine Position wird ermittelt... -->
 	</div>
 	
 	  	<!--Map wird sichtbar -->
@@ -700,7 +658,7 @@
 	 </div>
       <hr>
       <footer>
-        <p>&copy; Smoking Brains 2013</p>
+        <p>&copy; Smoking Brains 2013 - 2014</p>
       </footer>
 
 

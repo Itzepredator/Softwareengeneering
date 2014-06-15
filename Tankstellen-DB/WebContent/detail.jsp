@@ -179,7 +179,7 @@
        <div class="panel panel-default">
         <div class="panel-body">
           <br>
-		  <form id="hauptsuche" Method="GET" action="list.jsp">		  
+		  <form id="hauptsuche" Method="GET" action="deteil.jsp">		  
           <div class="col-md-4">
             <input name="searchText" id="address" type="text" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';" onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
 		  	<c:set var="searchText" value="${param.searchText}"/>
@@ -257,10 +257,86 @@
 	var countryRestrict = { 'country': 'de' }; 
 	var places;
 	var DBConnector;		
-	var sec = "list";
-	  
+	var sec = "detail";
 	
-	var searchText = "<c:out value="${param.searchText}"/>";
+ 	var wertestring = '';
+ 	
+	
+	var liste = new Werteliste(location.search);
+
+	
+	
+	var locations = [
+						{	"id":"9272",
+							"web_id":"79872438",
+							"name":"AVIA",
+							"address":"An Der Stadtautobahn 38",
+							"zip":"18107",
+							"city":"Rostock",
+							"lat":"54.1317885",
+							"lon":"12.0635988",
+							"mts_brand":"AVIA"
+						},
+							
+						{	"id":"10835",
+							"web_id":"1ab12a53",
+							"name":"Aral",
+							"address":"An Der Stadtautobahn 60",
+							"zip":"18119",
+							"city":"Rostock",
+							"lat":"54.16825",
+							"lon":"12.07995",
+							"mts_brand":"ARAL"
+						},
+						
+						{	"id":"10929",
+							"web_id":"51bd2ab1",
+							"name":"Aral",
+							"address":"Toitenwinkler Allee 1",
+							"zip":"18147",
+							"city":"Rostock",
+							"lat":"54.11383",
+							"lon":"12.16077",
+							"mts_brand":"ARAL"
+						},
+						{	"id":"11242",
+							"web_id":"bfba2bea",
+							"name":"Aral",
+							"address":"Tessiner Stra\u00dfe 68",
+							"zip":"18055",
+							"city":"Rostock",
+							"lat":"54.0810616",
+							"lon":"12.1943837",
+							"mts_brand":"ARAL"
+						},
+						
+						{	"id":"11723",
+							"web_id":"eb3e2dcb",
+							"name":"Aral",
+							"address":"R\u00f6versh\u00e4ger Chaussee 1",
+							"zip":"18146",
+							"city":"Rostock",
+							"lat":"54.09931",
+							"lon":"12.17473",
+							"mts_brand":"ARAL"
+						},
+						
+						{	"id":"13382",
+							"web_id":"783c3446",
+							"name":"Star",
+							"address":"Hinrichsdorfer Strasse 7E",
+							"zip":"18146",
+							"city":"Rostock",
+							"lat":"54.1109933",
+							"lon":"12.1645474",
+							"mts_brand":"STAR"
+						},
+						{"id":"16350","web_id":"fbc13fde","name":"Shell","address":"Sankt-Petersburger Str. ","zip":"18107","city":"Rostock","lat":"54.130546","lon":"12.057902","mts_brand":"Shell"},{"id":"16973","web_id":"e28b424d","name":"TOTAL","address":"Warnowufer 53","zip":"18057","city":"Rostock","lat":"54.09332","lon":"12.11552","mts_brand":"Total"},{"id":"17430","web_id":"3f344416","name":"TOTAL","address":"Erich-Schlesinger-Str. 26","zip":"18059","city":"Rostock","lat":"54.07666","lon":"12.11905","mts_brand":"Total"},{"id":"17433","web_id":"ccd54419","name":"Sonstige","address":"R\u00f6versh\u00e4ger Chaussee 5","zip":"18146","city":"Rostock","lat":"54.10005","lon":"12.18156","mts_brand":"team"},{"id":"18023","web_id":"a18a4667","name":"TOTAL","address":"An Der Stadtautobahn 70","zip":"18107","city":"Rostock-Luettenklein","lat":"54.1320386","lon":"12.0631525","mts_brand":"Total"},{"id":"19085","web_id":"0c9d4a8d","name":"Sonstige","address":"Handwerkstra\u00dfe 1 ","zip":"18069","city":"Rostock","lat":"54.12559","lon":"12.07709","mts_brand":"CITTI"},{"id":"19647","web_id":"007c4cbf","name":"Q1","address":"Fischerweg 1","zip":"18069","city":"Rostock","lat":"54.1137","lon":"12.08059","mts_brand":"Q1"},{"id":"19665","web_id":"d78d4cd1","name":"ESSO","address":"Werftallee  ","zip":"18109","city":"Rostock","lat":"54.157248","lon":"12.078678","mts_brand":"ESSO"},{"id":"19902","web_id":"ed624dbe","name":"Star","address":"Gro\u00dfe Rampe 1","zip":"18146","city":"Rostock","lat":"54.13945","lon":"12.16683","mts_brand":"STAR"},{"id":"21451","web_id":"99f953cb","name":"ESSO","address":"Lise-Meitner-Ring 1  ","zip":"18059","city":"Rostock","lat":"54.05956","lon":"12.11783","mts_brand":"ESSO"},{"id":"21722","web_id":"eb9654da","name":"Shell","address":"Lorenzstr. 75 ","zip":"18146","city":"Rostock","lat":"54.10961","lon":"12.16789","mts_brand":"Shell"},{"id":"28679","web_id":"be3e7007","name":"ESSO","address":"Rostocker Str. 52  ","zip":"18069","city":"Rostock","lat":"54.106062","lon":"12.047943","mts_brand":"ESSO"},{"id":"28718","web_id":"6406702e","name":"Sonstige","address":"Roevershaeger Ch. 3","zip":"18146","city":"Rostock","lat":"54.09951","lon":"12.17716","mts_brand":"Tankcenter"},{"id":"29990","web_id":"bffe7526","name":"TOTAL","address":"Tessiner Str. 98","zip":"18055","city":"Rostock","lat":"54.08061","lon":"12.18906","mts_brand":"Total"},{"id":"31149","web_id":"a57a79ad","name":"ESSO","address":"Verbindungsweg  ","zip":"18055","city":"Rostock","lat":"54.0829098","lon":"12.1645775","mts_brand":"ESSO"},{"id":"33770","web_id":"d2c283ea","name":"Sonstige","address":"Hansestr. 47 ","zip":"18182","city":"Rostock-Bentwisch","lat":"54.11366","lon":"12.19276","mts_brand":"Supermarkt-Tankstelle"},{"id":"33947","web_id":"4361849b","name":"HEM","address":"Zum S\u00fcdtor 6","zip":"18147","city":"Rostock","lat":"54.1369547","lon":"12.1118795","mts_brand":"HEM"},{"id":"34594","web_id":"bcda8722","name":"JET","address":"Satower Str. 10A ","zip":"18059","city":"Rostock","lat":"54.0753617","lon":"12.09267","mts_brand":"JET"},{"id":"46584","web_id":"dd65b5f8","name":"Agip","address":"Schmarler Damm 9","zip":"18069","city":"Rostock","lat":"54.129373","lon":"12.0753222","mts_brand":"Agip"},{"id":"54001","web_id":"3560d2f1","name":"JET","address":"Werftstr. 45 ","zip":"18057","city":"Rostock","lat":"54.094965","lon":"12.1026204","mts_brand":"JET"},{"id":"59362","web_id":"0e09e7e2","name":"AVIA","address":"Am Liepengraben 18 18","zip":"18147","city":"Rostock","lat":"54.128434","lon":"12.1613073","mts_brand":"AVIA"},{"id":"85423","web_id":"835b14daf","name":"HEM","address":"Ost-West-Str. 13","zip":"18147","city":"Rostock","lat":"54.14565","lon":"12.115951","mts_brand":"HEM"},{"id":"85447","web_id":"d3e514dc7","name":"Sonstige","address":"Gielandstr. 2","zip":"18147","city":"Rostock","lat":"54.1261","lon":"12.1628","mts_brand":"Tankstelle"},{"id":"85485","web_id":"c7e414ded","name":"Sonstige","address":"Hansestr. 20-22","zip":"18182","city":"Rostock-Bentwisch","lat":"54.1274","lon":"12.1766","mts_brand":"team"}
+	 	    ];
+	
+	  
+	//parametriesierbar
+	var searchText = "";//"<c:out value="${param.searchText}"/>";
 	var typeOfSearch = "city";
 	
 	if(sec == 'list' && typeOfSearch != 'coord') {
@@ -272,8 +348,16 @@
 	            lon = locResult[0].geometry.location.lng();
 			});
 	} else {
-        var lat = 49.798456;
-        var lon = 9.942688;
+	
+        //var lat = 49.798456;
+        //var lon = 9.942688;
+        for(var i=0; i<locations.length; i++) {
+        	if(wertestring == locations[i].web_id) {
+        		var lat = parseFloat(locations[i].lat);
+        		var lon = parseFloat(locations[i].lon);
+        		console.log("else " + lon);
+        	}
+        }
         }
 	
 	function initialize() {		
@@ -342,75 +426,6 @@
 // 	}
 	
  	function addListMarker() {
- 		
- 	    var locations = [
-					{	"id":"9272",
-						"web_id":"79872438",
-						"name":"AVIA",
-						"address":"An Der Stadtautobahn 38",
-						"zip":"18107",
-						"city":"Rostock",
-						"lat":"54.1317885",
-						"lon":"12.0635988",
-						"mts_brand":"AVIA"
-					},
-						
-					{	"id":"10835",
-						"web_id":"1ab12a53",
-						"name":"Aral",
-						"address":"An Der Stadtautobahn 60",
-						"zip":"18119",
-						"city":"Rostock",
-						"lat":"54.16825",
-						"lon":"12.07995",
-						"mts_brand":"ARAL"
-					},
-					
-					{	"id":"10929",
-						"web_id":"51bd2ab1",
-						"name":"Aral",
-						"address":"Toitenwinkler Allee 1",
-						"zip":"18147",
-						"city":"Rostock",
-						"lat":"54.11383",
-						"lon":"12.16077",
-						"mts_brand":"ARAL"
-					},
-					{	"id":"11242",
-						"web_id":"bfba2bea",
-						"name":"Aral",
-						"address":"Tessiner Stra\u00dfe 68",
-						"zip":"18055",
-						"city":"Rostock",
-						"lat":"54.0810616",
-						"lon":"12.1943837",
-						"mts_brand":"ARAL"
-					},
-					
-					{	"id":"11723",
-						"web_id":"eb3e2dcb",
-						"name":"Aral",
-						"address":"R\u00f6versh\u00e4ger Chaussee 1",
-						"zip":"18146",
-						"city":"Rostock",
-						"lat":"54.09931",
-						"lon":"12.17473",
-						"mts_brand":"ARAL"
-					},
-					
-					{	"id":"13382",
-						"web_id":"783c3446",
-						"name":"Star",
-						"address":"Hinrichsdorfer Strasse 7E",
-						"zip":"18146",
-						"city":"Rostock",
-						"lat":"54.1109933",
-						"lon":"12.1645474",
-						"mts_brand":"STAR"
-					},
-					{"id":"16350","web_id":"fbc13fde","name":"Shell","address":"Sankt-Petersburger Str. ","zip":"18107","city":"Rostock","lat":"54.130546","lon":"12.057902","mts_brand":"Shell"},{"id":"16973","web_id":"e28b424d","name":"TOTAL","address":"Warnowufer 53","zip":"18057","city":"Rostock","lat":"54.09332","lon":"12.11552","mts_brand":"Total"},{"id":"17430","web_id":"3f344416","name":"TOTAL","address":"Erich-Schlesinger-Str. 26","zip":"18059","city":"Rostock","lat":"54.07666","lon":"12.11905","mts_brand":"Total"},{"id":"17433","web_id":"ccd54419","name":"Sonstige","address":"R\u00f6versh\u00e4ger Chaussee 5","zip":"18146","city":"Rostock","lat":"54.10005","lon":"12.18156","mts_brand":"team"},{"id":"18023","web_id":"a18a4667","name":"TOTAL","address":"An Der Stadtautobahn 70","zip":"18107","city":"Rostock-Luettenklein","lat":"54.1320386","lon":"12.0631525","mts_brand":"Total"},{"id":"19085","web_id":"0c9d4a8d","name":"Sonstige","address":"Handwerkstra\u00dfe 1 ","zip":"18069","city":"Rostock","lat":"54.12559","lon":"12.07709","mts_brand":"CITTI"},{"id":"19647","web_id":"007c4cbf","name":"Q1","address":"Fischerweg 1","zip":"18069","city":"Rostock","lat":"54.1137","lon":"12.08059","mts_brand":"Q1"},{"id":"19665","web_id":"d78d4cd1","name":"ESSO","address":"Werftallee  ","zip":"18109","city":"Rostock","lat":"54.157248","lon":"12.078678","mts_brand":"ESSO"},{"id":"19902","web_id":"ed624dbe","name":"Star","address":"Gro\u00dfe Rampe 1","zip":"18146","city":"Rostock","lat":"54.13945","lon":"12.16683","mts_brand":"STAR"},{"id":"21451","web_id":"99f953cb","name":"ESSO","address":"Lise-Meitner-Ring 1  ","zip":"18059","city":"Rostock","lat":"54.05956","lon":"12.11783","mts_brand":"ESSO"},{"id":"21722","web_id":"eb9654da","name":"Shell","address":"Lorenzstr. 75 ","zip":"18146","city":"Rostock","lat":"54.10961","lon":"12.16789","mts_brand":"Shell"},{"id":"28679","web_id":"be3e7007","name":"ESSO","address":"Rostocker Str. 52  ","zip":"18069","city":"Rostock","lat":"54.106062","lon":"12.047943","mts_brand":"ESSO"},{"id":"28718","web_id":"6406702e","name":"Sonstige","address":"Roevershaeger Ch. 3","zip":"18146","city":"Rostock","lat":"54.09951","lon":"12.17716","mts_brand":"Tankcenter"},{"id":"29990","web_id":"bffe7526","name":"TOTAL","address":"Tessiner Str. 98","zip":"18055","city":"Rostock","lat":"54.08061","lon":"12.18906","mts_brand":"Total"},{"id":"31149","web_id":"a57a79ad","name":"ESSO","address":"Verbindungsweg  ","zip":"18055","city":"Rostock","lat":"54.0829098","lon":"12.1645775","mts_brand":"ESSO"},{"id":"33770","web_id":"d2c283ea","name":"Sonstige","address":"Hansestr. 47 ","zip":"18182","city":"Rostock-Bentwisch","lat":"54.11366","lon":"12.19276","mts_brand":"Supermarkt-Tankstelle"},{"id":"33947","web_id":"4361849b","name":"HEM","address":"Zum S\u00fcdtor 6","zip":"18147","city":"Rostock","lat":"54.1369547","lon":"12.1118795","mts_brand":"HEM"},{"id":"34594","web_id":"bcda8722","name":"JET","address":"Satower Str. 10A ","zip":"18059","city":"Rostock","lat":"54.0753617","lon":"12.09267","mts_brand":"JET"},{"id":"46584","web_id":"dd65b5f8","name":"Agip","address":"Schmarler Damm 9","zip":"18069","city":"Rostock","lat":"54.129373","lon":"12.0753222","mts_brand":"Agip"},{"id":"54001","web_id":"3560d2f1","name":"JET","address":"Werftstr. 45 ","zip":"18057","city":"Rostock","lat":"54.094965","lon":"12.1026204","mts_brand":"JET"},{"id":"59362","web_id":"0e09e7e2","name":"AVIA","address":"Am Liepengraben 18 18","zip":"18147","city":"Rostock","lat":"54.128434","lon":"12.1613073","mts_brand":"AVIA"},{"id":"85423","web_id":"835b14daf","name":"HEM","address":"Ost-West-Str. 13","zip":"18147","city":"Rostock","lat":"54.14565","lon":"12.115951","mts_brand":"HEM"},{"id":"85447","web_id":"d3e514dc7","name":"Sonstige","address":"Gielandstr. 2","zip":"18147","city":"Rostock","lat":"54.1261","lon":"12.1628","mts_brand":"Tankstelle"},{"id":"85485","web_id":"c7e414ded","name":"Sonstige","address":"Hansestr. 20-22","zip":"18182","city":"Rostock-Bentwisch","lat":"54.1274","lon":"12.1766","mts_brand":"team"}
- 	    ];
- 		
  		//var lat = 54.1317885;
  		//var lon = 12.0635988;
  		
@@ -420,11 +435,8 @@
 //  			map: map
 //  		});
 			var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
-	
-			
 			var array =[];
 			
-		
 			for(var i=0; i<locations.length; i++) {
 				var marker = new google.maps.Marker({
 					position: new google.maps.LatLng(locations[i].lat, locations[i].lon),
@@ -434,19 +446,81 @@
 					id: locations[i].web_id
 					
 				});
-				
 				array.push(marker);
 			}
 			for(var k=0; k<array.length; k++) {
 	
 				new google.maps.event.addListener(array[k], 'click', function() {
 					
-		 			window.location.href='detail.jsp'+'?'+this.id;
-		 			console.log("Meine ID ID?" + this.id);
+		 			window.location.href='#' + this.id;
 					
 		 		});	 		
 			}
  	}
+ 	
+ 	function addDetailMarker() {
+ 		map.setZoom(15);
+ 		var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
+ 		console.log("addDetailMarker " + wertestring);
+ 		var array =[];
+ 			
+ 				for (var i=0; i<locations.length; i++) {
+ 					console.log("inf ForSchleife " + wertestring);
+ 					if(locations[i].web_id === wertestring) {
+ 						console.log("in if " + wertestring);
+ 						console.log("location " + locations[i].lat +" | "+ locations[i].lon);
+ 						var setLatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
+ 					//var LatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon); 
+ 		  			var marker = new google.maps.Marker({
+ 		  				position: setLatLng,
+ 		  				map: map,
+ 		 				Icon: setIcon
+ 		 			});
+ 		  			array.push(marker);
+ 				}
+ 			}
+ 	}
+ 	
+
+ 	
+ 	function Werteliste (querystring) {
+ 		  if (querystring == '') return;
+ 		  wertestring = querystring.slice(1);
+ 		  console.log("Was ist es " + wertestring);
+ 		  
+//  		  for(var i=0; i<wertestring.length; i++) {
+//  			var test = wertestring[i];
+//  			console.log("Bin ich ein array? " + test);
+//  		  }
+
+// 			for (var i; i< locations.length; i++) {
+				
+// 				if (wertestring == locations[i].web_id) {
+// 					var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
+// 					var LatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
+// 					var marker = new google.maps.Marker({
+// 						pos: LatLng,
+// 						title: test,
+// 						Icon: setIcon
+// 					});
+// 				}
+
+// 			}
+ 		  
+ 	}
+ 		  
+ 		  //var paare = wertestring.split("&");
+ 		  //var paar, 
+ 		 // var name, wert;
+//  		  var web_id;
+//  		  for (var i = 0; i < web_id.length; i++) {
+//  		    paar = paare[i].split("=");
+//  		    name = paar[0];
+//  		    wert = paar[1];
+//  		    name = unescape(name).replace("+", " ");
+//  		    wert = unescape(wert).replace("+", " ");
+//  		    this[name] = wert;
+//  		  
 
 // 	function addListMarker() {
 // 		var xml = new XMLHttpRequest();

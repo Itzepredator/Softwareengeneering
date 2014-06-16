@@ -81,6 +81,7 @@
 				  <input type="text" class="form-control" name="vorname1" id="feldVorname" placeholder="Vorname eingeben">
 				  <jsp:setProperty name="dbconnector" property="vorname" param="vorname1"/>
 				 </div>
+				 </div>
 				 <div class="col-md-5">
 				 <div class="form-group">
 				  <label for="feldNachname">
@@ -89,7 +90,6 @@
 				  <input type="text" class="form-control" name="nachname1" id="feldNachname" placeholder="Nachname eingeben">
 				  <jsp:setProperty name="dbconnector" property="nachname" param="nachname1"/>
 				 </div>
-				</div>
 				</div>
 				<div class="col-md-5">
 				 <div class="form-group">

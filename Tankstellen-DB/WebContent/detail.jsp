@@ -142,7 +142,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tankstellen DB</a>
+          <a class="navbar-brand" href="map_index.jsp">Tankstellen DB</a>
         </div>
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
@@ -168,7 +168,7 @@
 		  
 		  <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="map_index.jsp">Home</a></li>
             <li><a href="#about">Über uns</a></li>
             <li><a href="#contact">Kontakt</a></li>
           </ul>
@@ -176,12 +176,12 @@
         </div><!--/.navbar-collapse -->
       </div>
       </div>
-       <div class="panel panel-default">
-        <div class="panel-body">
-          <br>
+<!--        <div class="panel panel-default"> -->
+<!--         <div class="panel-body"> -->
+<!--           <br> -->
 		  
-          </div>
-        </div>
+<!--           </div> -->
+<!--         </div> -->
       
 
 	  
@@ -216,13 +216,9 @@
 	var places;
 	var DBConnector;		
 	var sec = "detail";
-	
  	var wertestring = '';
  	
-	
 	var liste = new Werteliste(location.search);
-
-	
 	
 	var locations = [
 						{	"id":"9272",
@@ -329,12 +325,6 @@
 		//disableDefaultUI: true,
 	   	};
 		map = new google.maps.Map(document.getElementById('map-test'), mapOptions);
-		
-		// Create a script tag and set the USGS URL as the source.
-// 		  var script = document.createElement('script');
-// 		  script.src = 'WebContent/WEB-INF/resources/json/rostock_tankstellen_test.txt';
-// 		  var s = document.getElementsByTagName('script')[0];
-// 		  s.parentNode.insertBefore(script, s);
 
 	}
 	
@@ -384,14 +374,6 @@
 // 	}
 	
  	function addListMarker() {
- 		//var lat = 54.1317885;
- 		//var lon = 12.0635988;
- 		
-//  		var setLatLng = new google.maps.LatLng(lat, lon);
-//  		var marker = new google.maps.Marker({
-//  			position: setLatLng,
-//  			map: map
-//  		});
 			var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
 			var array =[];
 			
@@ -439,31 +421,10 @@
  			}
  	}
  	
-
- 	
  	function Werteliste (querystring) {
  		  if (querystring == '') return;
  		  wertestring = querystring.slice(1);
  		  console.log("Was ist es " + wertestring);
- 	     
- 		  //for(var i=0; i<wertestring.length; i++) {
-//  			var test = wertestring[i];
-//  			console.log("Bin ich ein array? " + test);
-//  		  }
-
-// 			for (var i; i< locations.length; i++) {
-				
-// 				if (wertestring == locations[i].web_id) {
-// 					var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
-// 					var LatLng = new google.maps.LatLng(locations[i].lat, locations[i].lon);
-// 					var marker = new google.maps.Marker({
-// 						pos: LatLng,
-// 						title: test,
-// 						Icon: setIcon
-// 					});
-// 				}
-
-// 			}
  		  
  	}
  		  
@@ -480,23 +441,10 @@
 //  		    this[name] = wert;
 //  		  
 
-// 	function addListMarker() {
-// 		var xml = new XMLHttpRequest();
-		
-// 		window.onload = function() {
-// 			xml.open("GET", "http://localhost:8080/Tankstellen-DB/rostock_tankstellen_test.json", false);
-// 			xml.send(null);
-			
-// 			document.write(xml.response.Text);
-// 		}
-// 	}
-
 	
 	if(sec == '') {
 		var watchId = navigator.geolocation.getCurrentPosition(usePosition);
-// 		navigator.geolocation.getCurrentPosition(function(position){
-//			initialize(position.coords);
-//			});
+		
 	}
 	
     if(sec == '' || sec == 'list' || sec == 'detail') {
@@ -525,10 +473,6 @@
 // 				places = new google.maps.places.PlacesService(map);
 // 				google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);
 
-
-
-
-
 		//navigator hat problem. wenn in initialize dann dauerhafte frage ob Standort ermittelt werden soll
 // 		navigator.geolocation.getCurrentPosition(function(position){
 // 			initialize(position.coords);
@@ -536,8 +480,6 @@
 // 			document.getElementById('pos').innerHTML = 'Deine Position konnte leider nicht ermittelt werden';
 // 		});
 		
-
-
 
 // 	   // Try HTML5 geolocation
 // 	   if(navigator.geolocation) {
@@ -609,24 +551,6 @@
 		  	}
 		});
 	}
-	
-	
-// 	function handleNoGeolocation(errorFlag) {
-// 		if (errorFlag) {
-// 			var content = 'Error: The Geolocation service failed.';
-// 		} else {
-// 			var content = 'Error: Your browser doesn\'t support geolocation.';
-// 		}
-		
-// 		var options = {
-// 			map: map,
-// 			position: new google.maps.LatLng(60, 105),
-// 			//content: content
-// 		};
-// 		var infowindow = new google.maps.InfoWindow(options);
-// 		map.setCenter(options.position);
-// 	}
-//		google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
 	
@@ -656,6 +580,8 @@
     </c:forEach>
 	 </table>
 	 </div>
+	 <div>
+	</div>
       <hr>
       <footer>
         <p>&copy; Smoking Brains 2013 - 2014</p>

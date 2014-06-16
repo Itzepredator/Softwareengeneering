@@ -45,6 +45,7 @@
   
   
     <!-- Import der Beans -->
+ 
   <jsp:useBean id="dbconnector" class="de.hsqldb.Datenbank.DBConnector"></jsp:useBean>
   
    <!-- Modal -->
@@ -142,7 +143,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tankstellen DB</a>
+          <a class="navbar-brand" href="map_index.jsp">Tankstellen DB</a>
         </div>
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
@@ -168,7 +169,7 @@
 		  
 		  <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="map_index.jsp">Home</a></li>
             <li><a href="#about">Über uns</a></li>
             <li><a href="#contact">Kontakt</a></li>
           </ul>

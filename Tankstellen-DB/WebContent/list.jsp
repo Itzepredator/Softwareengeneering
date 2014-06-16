@@ -142,7 +142,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tankstellen DB</a>
+          <a class="navbar-brand" href="map_index.jsp">Tankstellen DB</a>
         </div>
         <div class="navbar-collapse collapse">
           <form class="navbar-form navbar-right">
@@ -168,7 +168,7 @@
 		  
 		  <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="map_index.jsp">Home</a></li>
             <li><a href="#about">Über uns</a></li>
             <li><a href="#contact">Kontakt</a></li>
           </ul>
@@ -244,7 +244,6 @@
 	
 	<!--<div id="map-test"/> -->
 
-
 		<!--Maps API-->
 	<script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?sensor=false">
@@ -259,7 +258,6 @@
 	var DBConnector;		
 	var sec = "list";
 	  
-	
 	var searchText = "<c:out value="${param.searchText}"/>";
 	var typeOfSearch = "city";
 	
@@ -287,12 +285,6 @@
 		//disableDefaultUI: true,
 	   	};
 		map = new google.maps.Map(document.getElementById('map-test'), mapOptions);
-		
-		// Create a script tag and set the USGS URL as the source.
-// 		  var script = document.createElement('script');
-// 		  script.src = 'WebContent/WEB-INF/resources/json/rostock_tankstellen_test.txt';
-// 		  var s = document.getElementsByTagName('script')[0];
-// 		  s.parentNode.insertBefore(script, s);
 
 	}
 	
@@ -410,15 +402,6 @@
 					},
 					{"id":"16350","web_id":"fbc13fde","name":"Shell","address":"Sankt-Petersburger Str. ","zip":"18107","city":"Rostock","lat":"54.130546","lon":"12.057902","mts_brand":"Shell"},{"id":"16973","web_id":"e28b424d","name":"TOTAL","address":"Warnowufer 53","zip":"18057","city":"Rostock","lat":"54.09332","lon":"12.11552","mts_brand":"Total"},{"id":"17430","web_id":"3f344416","name":"TOTAL","address":"Erich-Schlesinger-Str. 26","zip":"18059","city":"Rostock","lat":"54.07666","lon":"12.11905","mts_brand":"Total"},{"id":"17433","web_id":"ccd54419","name":"Sonstige","address":"R\u00f6versh\u00e4ger Chaussee 5","zip":"18146","city":"Rostock","lat":"54.10005","lon":"12.18156","mts_brand":"team"},{"id":"18023","web_id":"a18a4667","name":"TOTAL","address":"An Der Stadtautobahn 70","zip":"18107","city":"Rostock-Luettenklein","lat":"54.1320386","lon":"12.0631525","mts_brand":"Total"},{"id":"19085","web_id":"0c9d4a8d","name":"Sonstige","address":"Handwerkstra\u00dfe 1 ","zip":"18069","city":"Rostock","lat":"54.12559","lon":"12.07709","mts_brand":"CITTI"},{"id":"19647","web_id":"007c4cbf","name":"Q1","address":"Fischerweg 1","zip":"18069","city":"Rostock","lat":"54.1137","lon":"12.08059","mts_brand":"Q1"},{"id":"19665","web_id":"d78d4cd1","name":"ESSO","address":"Werftallee  ","zip":"18109","city":"Rostock","lat":"54.157248","lon":"12.078678","mts_brand":"ESSO"},{"id":"19902","web_id":"ed624dbe","name":"Star","address":"Gro\u00dfe Rampe 1","zip":"18146","city":"Rostock","lat":"54.13945","lon":"12.16683","mts_brand":"STAR"},{"id":"21451","web_id":"99f953cb","name":"ESSO","address":"Lise-Meitner-Ring 1  ","zip":"18059","city":"Rostock","lat":"54.05956","lon":"12.11783","mts_brand":"ESSO"},{"id":"21722","web_id":"eb9654da","name":"Shell","address":"Lorenzstr. 75 ","zip":"18146","city":"Rostock","lat":"54.10961","lon":"12.16789","mts_brand":"Shell"},{"id":"28679","web_id":"be3e7007","name":"ESSO","address":"Rostocker Str. 52  ","zip":"18069","city":"Rostock","lat":"54.106062","lon":"12.047943","mts_brand":"ESSO"},{"id":"28718","web_id":"6406702e","name":"Sonstige","address":"Roevershaeger Ch. 3","zip":"18146","city":"Rostock","lat":"54.09951","lon":"12.17716","mts_brand":"Tankcenter"},{"id":"29990","web_id":"bffe7526","name":"TOTAL","address":"Tessiner Str. 98","zip":"18055","city":"Rostock","lat":"54.08061","lon":"12.18906","mts_brand":"Total"},{"id":"31149","web_id":"a57a79ad","name":"ESSO","address":"Verbindungsweg  ","zip":"18055","city":"Rostock","lat":"54.0829098","lon":"12.1645775","mts_brand":"ESSO"},{"id":"33770","web_id":"d2c283ea","name":"Sonstige","address":"Hansestr. 47 ","zip":"18182","city":"Rostock-Bentwisch","lat":"54.11366","lon":"12.19276","mts_brand":"Supermarkt-Tankstelle"},{"id":"33947","web_id":"4361849b","name":"HEM","address":"Zum S\u00fcdtor 6","zip":"18147","city":"Rostock","lat":"54.1369547","lon":"12.1118795","mts_brand":"HEM"},{"id":"34594","web_id":"bcda8722","name":"JET","address":"Satower Str. 10A ","zip":"18059","city":"Rostock","lat":"54.0753617","lon":"12.09267","mts_brand":"JET"},{"id":"46584","web_id":"dd65b5f8","name":"Agip","address":"Schmarler Damm 9","zip":"18069","city":"Rostock","lat":"54.129373","lon":"12.0753222","mts_brand":"Agip"},{"id":"54001","web_id":"3560d2f1","name":"JET","address":"Werftstr. 45 ","zip":"18057","city":"Rostock","lat":"54.094965","lon":"12.1026204","mts_brand":"JET"},{"id":"59362","web_id":"0e09e7e2","name":"AVIA","address":"Am Liepengraben 18 18","zip":"18147","city":"Rostock","lat":"54.128434","lon":"12.1613073","mts_brand":"AVIA"},{"id":"85423","web_id":"835b14daf","name":"HEM","address":"Ost-West-Str. 13","zip":"18147","city":"Rostock","lat":"54.14565","lon":"12.115951","mts_brand":"HEM"},{"id":"85447","web_id":"d3e514dc7","name":"Sonstige","address":"Gielandstr. 2","zip":"18147","city":"Rostock","lat":"54.1261","lon":"12.1628","mts_brand":"Tankstelle"},{"id":"85485","web_id":"c7e414ded","name":"Sonstige","address":"Hansestr. 20-22","zip":"18182","city":"Rostock-Bentwisch","lat":"54.1274","lon":"12.1766","mts_brand":"team"}
  	    ];
- 		
- 		//var lat = 54.1317885;
- 		//var lon = 12.0635988;
- 		
-//  		var setLatLng = new google.maps.LatLng(lat, lon);
-//  		var marker = new google.maps.Marker({
-//  			position: setLatLng,
-//  			map: map
-//  		});
 			var setIcon = 'http://oi57.tinypic.com/1z1rd04.jpg';
 	
 			
@@ -448,23 +431,8 @@
 			}
  	}
 
-// 	function addListMarker() {
-// 		var xml = new XMLHttpRequest();
-		
-// 		window.onload = function() {
-// 			xml.open("GET", "http://localhost:8080/Tankstellen-DB/rostock_tankstellen_test.json", false);
-// 			xml.send(null);
-			
-// 			document.write(xml.response.Text);
-// 		}
-// 	}
-
-	
 	if(sec == '') {
 		var watchId = navigator.geolocation.getCurrentPosition(usePosition);
-// 		navigator.geolocation.getCurrentPosition(function(position){
-//			initialize(position.coords);
-//			});
 	}
 	
     if(sec == '' || sec == 'list' || sec == 'detail') {
@@ -481,8 +449,7 @@
 	
 	
     //google.maps.event.addDomListener(window, 'load', initialize);
-	
-	
+		
 		//Autokompletioin
 // 		autocomplete = new google.maps.places.Autocomplete(
 // 				/** @type {HTMLInputElement} */
@@ -493,10 +460,6 @@
 // 				places = new google.maps.places.PlacesService(map);
 // 				google.maps.event.addListener(autocomplete, 'places_changed', onPlaceChanged);
 
-
-
-
-
 		//navigator hat problem. wenn in initialize dann dauerhafte frage ob Standort ermittelt werden soll
 // 		navigator.geolocation.getCurrentPosition(function(position){
 // 			initialize(position.coords);
@@ -504,8 +467,6 @@
 // 			document.getElementById('pos').innerHTML = 'Deine Position konnte leider nicht ermittelt werden';
 // 		});
 		
-
-
 
 // 	   // Try HTML5 geolocation
 // 	   if(navigator.geolocation) {
@@ -525,18 +486,6 @@
 // 	} else {
 //     	// Browser doesn't support Geolocation
 // 		handleNoGeolocation(false);
-// 	}
-
-	
-// 	function onPlaceChanged() {
-// 		var place = autocomplete.getPlace();
-// 		if (place.geometry) {
-// 			map.panTo(place.geometry.location);
-// 			map.setZoom(16);
-// 			//search();
-// 		} else {
-// 			document.getElementById('address');
-// 		}
 // 	}
       
 //     function toggleBounce() {
@@ -578,24 +527,6 @@
 // 		  	}
 // 		});
 // 	}
-	
-	
-// 	function handleNoGeolocation(errorFlag) {
-// 		if (errorFlag) {
-// 			var content = 'Error: The Geolocation service failed.';
-// 		} else {
-// 			var content = 'Error: Your browser doesn\'t support geolocation.';
-// 		}
-		
-// 		var options = {
-// 			map: map,
-// 			position: new google.maps.LatLng(60, 105),
-// 			//content: content
-// 		};
-// 		var infowindow = new google.maps.InfoWindow(options);
-// 		map.setCenter(options.position);
-// 	}
-//		google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
 	

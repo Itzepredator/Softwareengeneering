@@ -154,8 +154,8 @@
               <input type="password" placeholder="Passwort" name="passwort" class="form-control">
               <jsp:setProperty name="dbconnector" property="passwort" param="passwort"/>
             </div>
-             <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>
-             <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> 
+          <!--  <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>-->
+            <!--  <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> -->
               <jsp:setProperty name="dbconnector" property="werteZurueck" param="a"/>
             <button type="submit" class="btn btn-success">Einloggen</button>
            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrieren">
@@ -321,7 +321,7 @@
 	function initialize() {		
 		var mapOptions = {
 		center: new google.maps.LatLng(lat, lon),
-		zoom: 14,
+		zoom: 18,
 		mapTypeId: google.maps.MapTypeId.ROADMAP,
 		streetViewControl: false,
 		mapTypeControl: false,
@@ -412,7 +412,7 @@
 					
 		 			window.location.href='#' + this.id;
 					
-		 		});	 		
+		 		});	 	
 			}
  	}
  	
@@ -445,8 +445,8 @@
  		  if (querystring == '') return;
  		  wertestring = querystring.slice(1);
  		  console.log("Was ist es " + wertestring);
- 		  
-//  		  for(var i=0; i<wertestring.length; i++) {
+ 	     
+ 		  //for(var i=0; i<wertestring.length; i++) {
 //  			var test = wertestring[i];
 //  			console.log("Bin ich ein array? " + test);
 //  		  }
@@ -585,9 +585,9 @@
 //     }
       
     function tankstellenTabelleLaden(){
-    <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
+
     <% 
-    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+    DBConnector.sucheTankstelleSQL("",request.getQueryString());   
     %>
 
     }

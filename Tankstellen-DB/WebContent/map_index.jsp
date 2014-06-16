@@ -154,8 +154,8 @@
               <input type="password" placeholder="Passwort" name="passwort" class="form-control">
               <jsp:setProperty name="dbconnector" property="passwort" param="passwort"/>
             </div>
-             <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>
-             <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> 
+            <!--  <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>-->
+            <!--  <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> -->
               <jsp:setProperty name="dbconnector" property="werteZurueck" param="a"/>
             <button type="submit" class="btn btn-success">Einloggen</button>
            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrieren">
@@ -182,7 +182,6 @@
 		  <form id= "hauptsuche" Method="GET" action="list.jsp" >		  
           <div class="col-md-4">
             <input name="searchText" id="address" type="text" value="PLZ / Ort / Koordinaten" class="form-control" onclick="if(this.value=='PLZ / Ort / Koordinaten') this.value='';"  onblur="if(this.value=='') this.value='PLZ / Ort / Koordinaten';">
-		  	<c:set var="searchText" value="${param.searchText}"/>
 		  </div>
           <div class="pull-right col-md-8 col-md-pull">
             <!--<div class="row"></div>

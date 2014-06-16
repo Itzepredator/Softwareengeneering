@@ -31,9 +31,8 @@ public class DBConnector
 	private String tankstelle="";
 	private boolean ergebnis = false;
 	private static ArrayList<ArrayList<String>> tankstellenList = new ArrayList<ArrayList<String>>();
- 
-
-
+	private String web_id ="";
+	public static String url ="";
 
 
 	public DBConnector()
@@ -164,7 +163,7 @@ public class DBConnector
 	private static ArrayList<ArrayList<String>> suchenAlleTankstellenSQLErstellenUndAusfuehren()
 			throws SQLException {
 		ArrayList<ArrayList<String>> listErgebnis;
-		String sql =  "Select t.* from tankstelle t where 1=1";
+		String sql =  "Select t.nr, t.name, t.straße, t.ort, t.plz, t.e10, t.super, t.superplus, t.diesel, t.vpowerdiesel from tankstelle t where 1=1";
 		  
 		  SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
 		 
@@ -178,7 +177,7 @@ public class DBConnector
 	}
 
 	
-	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort)
+	public static ArrayList<ArrayList<String>> sucheTankstelleSQL(String ort, String web_id)
     { ArrayList<ArrayList<String>> listErgebnis = new ArrayList<ArrayList<String>>();
 
 		ladenDerTreiberKlasse();
@@ -190,7 +189,7 @@ public class DBConnector
       		  "jdbc:hsqldb:file:C:\\Users\\"+ user +"\\Documents\\HSQLDB\\hsqldb-2.3.1\\hsqldb-2.3.1\\hsqldb\\DB; shutdown=true", "dbuser", "dbuser" );
       
       //Sql zusammenbauen und ausführen
-        tankstellenList = sucheEineTankstelleErstellenUndAusfuehren(ort);
+        tankstellenList = sucheEineTankstelleErstellenUndAusfuehren(ort, web_id);
      
     }
     catch ( SQLException e )
@@ -213,19 +212,20 @@ public class DBConnector
 
 //
 	private static ArrayList<ArrayList<String>> sucheEineTankstelleErstellenUndAusfuehren(
-			String ort) throws SQLException {
+			String ort, String web_id) throws SQLException {
 		ArrayList<ArrayList<String>> listErgebnis;
 		String sql = "";
 		  		 
-		  		 sql += "Select t.* from tankstelle t where 1=1 ";
+		  		 sql += "Select t.nr, t.name, t.straße, t.ort, t.plz, t.e10, t.super, t.superplus, t.diesel, t.vpowerdiesel from tankstelle t where 1=1 ";
 		  		if(!ort.isEmpty()){
 		  		sql += "and t.name like ('%" +ort+ "%') ";
 		  		sql += "or t.Strasse like ('%" +ort+ "%') ";
 		  		sql += "or t.ort like ('%" +ort+ "%') ";
 		  		sql += "or t.plz like ('%" +ort+ "%') ";}
-		  
+		  		if(!web_id.isEmpty()){
+		  	    sql += "and t.web_id = '"+web_id+"'";
+		  		}
 		  SuchenSQL lsql= new SuchenSQL(con.createStatement(),con, sql);
-		 
 		  listErgebnis=lsql.sqlAusfuehren();
 		  for(ArrayList<String> l : listErgebnis){
 			  for(String l1: l){
@@ -428,7 +428,7 @@ public class DBConnector
 
 	public void setOrt(String ort) {
 		this.ort = ort;
-		sucheTankstelleSQL(getOrt());
+		sucheTankstelleSQL(getOrt(),"");
 	}
 
 
@@ -471,6 +471,18 @@ public class DBConnector
 	public void setTankstellenList(ArrayList<ArrayList<String>> testList) {
 		DBConnector.tankstellenList = testList;
 	}
+	 
+		public String getWeb_id() {
+			return web_id;
+		}
 
+
+		public void setWeb_id(String web_id) {
+
+			this.web_id = web_id;
+			sucheTankstelleSQL("", url);
+		}
+
+		
 
 }

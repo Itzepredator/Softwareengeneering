@@ -154,8 +154,8 @@
               <input type="password" placeholder="Passwort" name="passwort" class="form-control">
               <jsp:setProperty name="dbconnector" property="passwort" param="passwort"/>
             </div>
-             <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>
-             <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> 
+                   <!--  <p>Login erfolgreich: <c:out value="${dbconnector.login}"/></p>-->
+            <!--  <p>Registrierung erfolgreich: <c:out value="${dbconnector.registrierung}"/></p> -->
               <jsp:setProperty name="dbconnector" property="werteZurueck" param="a"/>
             <button type="submit" class="btn btn-success">Einloggen</button>
            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modalRegistrieren">
@@ -555,7 +555,7 @@
     function tankstellenTabelleLaden(){
     <c:set target="${dbconnector}" property="ort" value="${param.Ortssuche}"/>
     <% 
-    DBConnector.sucheTankstelleSQL(dbconnector.getOrt());   
+    DBConnector.sucheTankstelleSQL(dbconnector.getOrt(),"");   
 
     %>
 
